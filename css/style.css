@@ -1,0 +1,27 @@
+html, body {
+	margin: 0;
+}
+
+body {
+	font-family: Arial;
+	background-color: #f1f1f1;
+	font-size: 12px;
+}
+
+#header {
+	background-color: #ffffff;
+	width: 100%;
+}
+
+#websiteName {
+	display: inline-block;
+	float: left;
+}
+
+#navigation ul {
+	list-style-type: none;
+}
+
+#navigation li {
+	display: inline-block;
+}
