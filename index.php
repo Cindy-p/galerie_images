@@ -5,8 +5,8 @@
 		<?php include("include/header.php"); ?>
 	</head>
 	<body>
-		<div id="header">
-			<div id="websiteName">
+		<div id="entete">
+			<div id="nomSite">
 				<a href="index.php">NicodyGalerie</a>
 			</div>
 			<div id="navigation">

@@ -8,14 +8,18 @@ body {
 	font-size: 12px;
 }
 
-#header {
+#entete {
 	background-color: #ffffff;
 	width: 100%;
 }
 
-#websiteName {
+#nomSite {
 	display: inline-block;
-	/*float: left;*/
+	float: left;
+}
+
+#navigation {
+	float: right;
 }
 
 #navigation ul {
