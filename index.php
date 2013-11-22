@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<head>
+		<meta charset="UTF-8"/>
 		<title>NicodyGalerie - Accueil</title>
 		<?php include("include/header.php"); ?>
 	</head>
