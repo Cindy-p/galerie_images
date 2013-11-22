@@ -15,7 +15,7 @@ body {
 
 #websiteName {
 	display: inline-block;
-	float: left;
+	/*float: left;*/
 }
 
 #navigation ul {
