@@ -33,7 +33,7 @@
 					<li>Noël</li>
 					<li>Chats</li>
 				</ul>
-				<div>
+				<div class="noel">
 					<div>
 						<img src="img/utilisateur1/noel/noel1.jpg" alt=""/>
 						<div>
@@ -55,6 +55,8 @@
 							<p>Description</p>
 						</div>
 					</div>
+				</div>
+				<div class="chats">
 					<div>
 						<img src="img/utilisateur1/chats/chat1.jpg" alt=""/>
 						<div>
@@ -76,7 +78,7 @@
 							<p>Description</p>
 						</div>
 					</div>
-				</div>
+				</div>				
 			</div>
 		</div>
 		<script type="text/javascript" src="js/jquery.js"></script>
