@@ -9,7 +9,6 @@
 
 			// On définit un id à la liste des catégories et des images
 			$("#galerie ul").attr("id", "categories");
-			// $("#categories").next().attr('id', 'listeImages');
 
 			// On ajoute la catégorie qui affichera toutes les images
 			$("#categories").prepend('<li>Tous</li>');
@@ -34,6 +33,26 @@
 
 			// Création des miniatures
 			$("img").addClass('miniature');
+
+			// Description qui s'affiche au survol de la souris
+			$(".conteneurImage p").addClass("description");
+
+			$(".conteneurImage img").each(function() {
+				var description = $(this).siblings("div").children(".description");
+				$(this).mouseenter(function() {
+					description.fadeIn("fast");
+				});
+
+				$(this).mouseleave(function() {
+					description.fadeOut("fast");
+				});
+
+				$(this).mousemove(function(event) {
+					description.css("left", event.pageX);
+					description.css("top", event.pageY);
+					description.show();
+				});
+			});
 		});
 	};
 })(jQuery);
