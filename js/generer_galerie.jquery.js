@@ -14,19 +14,25 @@
 			$("#categories").prepend('<li>Tous</li>');
 
 			// Affichage des images en fonction des catégories
-			$("#categories li").each(function(index) {
+			var precedCategorie = $("#categories li").first();
+			$("#categories li").each(function() {
 				$(this).click(function() {
-					$(".conteneurImage").hide();
-					var nomCategorie = $(this).text().toLowerCase().replace(/[èéêë]/g, "e");
-					if (nomCategorie != "tous") {
-						$(".conteneurImage").each(function() {
-							if ($(this).parent().attr("class") == nomCategorie) {
-								$(this).fadeIn("slow");
-							}
-						});
-					}
-					else {
-						$(".conteneurImage").fadeIn("slow");
+					var selectCategorie = $(this);
+					if (selectCategorie.text() != precedCategorie.text()) {
+						console.log("ok");
+						precedCategorie = selectCategorie;
+						$(".conteneurImage").hide();
+						var nomCategorie = $(this).text().toLowerCase().replace(/[èéêë]/g, "e");
+						if (nomCategorie != "tous") {
+							$(".conteneurImage").each(function() {
+								if ($(this).parent().attr("class") == nomCategorie) {
+									$(this).fadeIn("slow");
+								}
+							});
+						}
+						else {
+							$(".conteneurImage").fadeIn("slow");
+						}
 					}
 				});
 			});
