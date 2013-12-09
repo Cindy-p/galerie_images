@@ -17,6 +17,11 @@
 						<div>
 							<span>Noël 1</span>
 							<p>Description 1</p>
+							<ul>
+								<li>sapin</li>
+								<li>neige</li>
+								<li>forêt</li>
+							</ul>
 						</div>
 					</div>
 					<div>
@@ -24,6 +29,9 @@
 						<div>
 							<span>Noël 2</span>
 							<p>Description 2</p>
+							<ul>
+								<li>Cadeau</li>
+							</ul>
 						</div>
 					</div>
 					<div>
@@ -31,6 +39,10 @@
 						<div>
 							<span>Noël 3</span>
 							<p>Description 3</p>
+							<ul>
+								<li>Maison</li>
+								<li>Décoration</li>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -40,6 +52,9 @@
 						<div>
 							<span>Chat 1</span>
 							<p>Description 1</p>
+							<ul>
+								<li>Animaux</li>
+							</ul>
 						</div>
 					</div>
 					<div>
@@ -47,6 +62,9 @@
 						<div>
 							<span>Chat 2</span>
 							<p>Description 2</p>
+							<ul>
+								<li>Animaux</li>
+							</ul>
 						</div>
 					</div>
 					<div>
@@ -54,6 +72,9 @@
 						<div>
 							<span>Chat 3</span>
 							<p>Description 3</p>
+							<ul>
+								<li>Animaux</li>
+							</ul>
 						</div>
 					</div>
 				</div>				
