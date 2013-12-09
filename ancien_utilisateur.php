@@ -33,5 +33,7 @@
         $msg = "Le login n'a pas un format correcte !";
     }
     
+    include("include/deconnexion.php");
+    
     echo json_encode(array('msg' => $msg));
 ?>

@@ -57,40 +57,48 @@ $(document).ready(function(){
 		width: 350,
 		modal: true,
 		buttons: {
-			"Création de votre compte": function() {
-				var estValide = true;
-				allFields.removeClass( "ui-state-error" );
-				
-				// Test de longueur
-				estValide = estValide && checkLength( login, "login", 3, 255 );
-				estValide = estValide && checkLength( email, "email", 6, 255 );
-				estValide = estValide && checkLength( password, "password", 6, 255 );
-				
-				// Test de format
-				estValide = estValide && checkRegexp( login, /^[a-z]([0-9a-zA-Z_])+$/i, "Le login peut être composé de chiffre, lettre minuscule et majuscule!" );
-				estValide = estValide && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, " prenom.nom@etu.univ-lyon1.fr" );
-				estValide = estValide && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Le mot de passe peut être composé de chiffre, lettre minuscule et majuscule" );
-				
-				// Tous les test valides
-				if ( estValide ) {
-					$.ajax({
-						type: "GET",
-						url: "nouveau_utilisateur.php",
-						async : false,
-						data: { login: login.val(), email: email.val(), password: password.val() },
-						dataType : "json",
-						statusCode: {
-							404: function() {
-							alert( "La page est introuvable !");
-							}
-						},
-						success: function (data){
-							console.log(data);
-						}
-					});
-					
-					$( this ).dialog( "close" );
-				}
+			"Création de votre compte":{
+                text: "Création de votre compte",
+                id: "nouveauValidation",
+                click: function() {
+                    var estValide = true;
+                    allFields.removeClass( "ui-state-error" );
+                    
+                    // Test de longueur
+                    estValide = estValide && checkLength( login, "login", 3, 255 );
+                    estValide = estValide && checkLength( email, "email", 6, 255 );
+                    estValide = estValide && checkLength( password, "password", 6, 255 );
+                    
+                    // Test de format
+                    estValide = estValide && checkRegexp( login, /^[a-z]([0-9a-zA-Z_])+$/i, "Le login peut être composé de chiffre, lettre minuscule et majuscule!" );
+                    estValide = estValide && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, " prenom.nom@etu.univ-lyon1.fr" );
+                    estValide = estValide && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Le mot de passe peut être composé de chiffre, lettre minuscule et majuscule" );
+                    
+                    // Tous les test valides
+                    if ( estValide ) {
+                        $.ajax({
+                            type: "GET",
+                            url: "nouveau_utilisateur.php",
+                            async : false,
+                            data: { login: login.val(), email: email.val(), password: password.val() },
+                            dataType : "json",
+                            statusCode: {
+                                404: function() {
+                                alert( "La page est introuvable !");
+                                }
+                            },
+                            success: function (data){
+                                if( data.msg != "ok"){
+                                    $("#textAncien").text(data.msg);
+                               } else {
+                                    $(location).attr('href',"index.php");
+                               }
+                            }
+                        });
+                        
+                        $( this ).dialog( "close" );
+                    }
+                }
 			},
 			Annuler: function() {
 				$( this ).dialog( "close" );
@@ -122,41 +130,45 @@ $(document).ready(function(){
 		width: 350,
 		modal: true,
 		buttons: {
-			"Connexion à votre compte": function() {
-				var estValide = true;
-				allFields.removeClass( "ui-state-error" );
-				
-				// Test de longueur
-				estValide = estValide && checkLength( login, "login", 3, 255 );
-				estValide = estValide && checkLength( password, "password", 6, 255 );
-				
-				// Test de format
-				estValide = estValide && checkRegexp( login, /^[a-z]([0-9a-zA-Z_])+$/i, "Le login de passe peut être composé de chiffre, lettre minuscule et majuscule" );
-				estValide = estValide && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Le mot de passe peut être composé de chiffre, lettre minuscule et majuscule" );
-				
-				// Tous les test valides
-				if ( estValide ) {
-                    $.ajax({
-						type: "GET",
-						url: "ancien_utilisateur.php",
-						async : false,
-						data: { login: login.val(),password: password.val() },
-						dataType : "json",
-						statusCode: {
-							404: function() {
-							alert( "La page est introuvable !");
-							}
-						},
-						success: function (data){
-                            if( data.msg != "ok"){
-                                $("#textAncien").text(data.msg);
-                           } else {
-                                $(location).attr('href',"index.php");
-                           }
-						}
-					});
-					$( this ).dialog( "close" );
-				}
+			"Connexion à votre compte": {
+                text: "Connexion à votre compte",
+                id: "validation",
+                click: function() {
+                    var estValide = true;
+                    allFields.removeClass( "ui-state-error" );
+                    
+                    // Test de longueur
+                    estValide = estValide && checkLength( login, "login", 3, 255 );
+                    estValide = estValide && checkLength( password, "password", 6, 255 );
+                    
+                    // Test de format
+                    estValide = estValide && checkRegexp( login, /^[a-z]([0-9a-zA-Z_])+$/i, "Le login de passe peut être composé de chiffre, lettre minuscule et majuscule" );
+                    estValide = estValide && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Le mot de passe peut être composé de chiffre, lettre minuscule et majuscule" );
+                    
+                    // Tous les test valides
+                    if ( estValide ) {
+                        $.ajax({
+                            type: "GET",
+                            url: "ancien_utilisateur.php",
+                            async : false,
+                            data: { login: login.val(),password: password.val() },
+                            dataType : "json",
+                            statusCode: {
+                                404: function() {
+                                alert( "La page est introuvable !");
+                                }
+                            },
+                            success: function (data){
+                                if( data.msg != "ok"){
+                                    $("#textAncien").text(data.msg);
+                               } else {
+                                    $(location).attr('href',"index.php");
+                               }
+                            }
+                        });
+                        $( this ).dialog( "close" );
+                    }
+                }
 			},
 			Annuler: function() {
 				$( this ).dialog( "close" );
@@ -176,4 +188,21 @@ $(document).ready(function(){
 		$("#formulaireDialogAncien").dialog("open");
 	});
 	
+    
+    /*********************************************************************************************************/
+/*												Fonction											 */
+/*********************************************************************************************************/	
+    
+    $('#nouveauLogin,#nouveauPassword').keyup(function(e) { 
+        if(e.keyCode == 13) {
+            $("#nouveauValidation").trigger("click");
+        }
+    });
+    
+    $('#login, #password').keyup(function(e) { 
+        if(e.keyCode == 13) {
+            $("#validation").trigger("click");
+        }
+    });
+    
 });
