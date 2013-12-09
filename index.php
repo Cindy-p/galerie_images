@@ -5,27 +5,6 @@
 		$page = array("titre" => "Nicody Galerie - Accueil");
 		include("include/header.php");
 ?>
-		<div id="entete">
-			<div id="nomSite">
-				<a href="index.php">Nicody Galerie</a>
-			</div>
-			<ul id="navigation">
-				<li>
-					<a href="index.php">Accueil</a>
-				</li>
-				<li>
-					<a href="#">Galerie</a>
-				</li>
-				<li>
-					<a href="#">Administration</a>
-				</li>
-				<li>
-					<form action="" id="recherche">
-						<input type="text" placeholder="Recherche..."/>
-					</form>
-				</li>
-			</ul>
-		</div>
 		<div id="corps">
 			<div id="galerie">
 				<ul>

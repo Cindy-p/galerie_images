@@ -13,3 +13,21 @@
 		<script type="text/javascript" src="js/galerie.js"></script>
 	</head>
 	<body>
+	    <div id="entete">
+			<div id="nomSite">
+				<a href="index.php">Nicody Galerie</a>
+			</div>
+			<ul id="navigation">
+				<li>
+					<a href="index.php">Accueil</a>
+				</li>
+				<li>
+					<a href="administration.php">Administration</a>
+				</li>
+				<li>
+					<form action="" id="recherche">
+						<input type="text" placeholder="Recherche..."/>
+					</form>
+				</li>
+			</ul>
+		</div>
