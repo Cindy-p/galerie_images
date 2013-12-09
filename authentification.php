@@ -24,7 +24,7 @@
 		</div>
 		
 		<div id="formulaireDialogNouveau" title="Création de votre compte">
-			<p class="validateTips">Tous les champs sont requis !</p>
+			<p id="textNouveau"  class="validateTips">Tous les champs sont requis !</p>
 			<form>
 				<fieldset>
 					<label for="login">Identifiant</label>
@@ -37,6 +37,7 @@
 			</form>
 		
 		<div id="formulaireDialogAncien" title="Connexion à votre compte">
+			<p id="textAncien" class="validateTips"></p>
 			<form>
 				<fieldset>
 					<label for="login">Identifiant</label>
