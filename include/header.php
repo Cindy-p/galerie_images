@@ -6,10 +6,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<meta charset="UTF-8"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title><?php echo $page["titre"]; ?></title>
 		<link rel="stylesheet" href="css/themes/cupertino/jquery-ui-1.10.3.custom.css">
 		<link rel="stylesheet" href="css/style.css"/>
+		<link rel="stylesheet" href="css/style_nico.css"/>
 		
 		<?php
 		    if (isset($page["link"])){
@@ -42,7 +43,7 @@
 			<div id="nomSite">
 				<a href="index.php" >Nicody Galerie</a>
 			</div>
-			<ul id="navigation">
+			<ul id="navigation" class="menu_deroulant">
 				<li>
 					<a href="index.php">Accueil</a>
 				</li>
@@ -51,6 +52,11 @@
 				?>
 				<li>
 					<a href="administration.php"><?php echo $_SESSION["utilisateur"]; ?></a>
+					<!--<ul id="menuAdministration">
+						<li><a href="#">Gestion Utilisateur</a></li>
+						<li><a href="#">Gestion Galerie</a></li>
+						<li><a href="logout.php">Déconnexion</a></li>
+					</ul>-->
 				</li>
 				<li>
 					<form action="" id="recherche">

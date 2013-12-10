@@ -4,9 +4,9 @@
 	include("include/connexion.php");
 	
 	// Récupération des variables
-	$login = htmlentities($_GET["login"]);
-    //$email = htmlentities($_GET["email"]);
-    $password = htmlentities($_GET["password"]);
+	$login = htmlentities($_POST["login"]);
+    //$email = htmlentities($_POST["email"]);
+    $password = htmlentities($_POST["password"]);
 
     // Vérification du contenu
     $pattern_login = '/^([0-9a-zA-Z])+$/';
@@ -32,6 +32,8 @@
                     
                     // Création de la session utilisateur
                     $_SESSION["utilisateur"] = $login;
+                    $_SESSION["idutilisateur"] = $pdo->lastInsertId();
+                    mkdir(dirname(__FILE__)."/utilisateurs/".$login,0700);
                     $msg = "ok";
                 }
                 catch(Exception $e) //en cas d'erreur
