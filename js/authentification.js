@@ -11,19 +11,22 @@ $(document).ready(function(){
 	var password = "";
 	var allFields = "";
 	var tips = "";
-	
+
 /*********************************************************************************************************/
-/*													Fonction											 */
+/*												Fonction											 */
 /*********************************************************************************************************/	
 
+	
 	// Affichage d'un texte un cour instant
-	function updateTips( t ) {
+	function updateTips(t) {
 		tips.text( t ).addClass( "ui-state-highlight" );
 		setTimeout(function() {
 			tips.removeClass( "ui-state-highlight", 1500 );
 		}, 500 );
-	}
-		
+	};
+
+
+
 	// Vérification de la longueur d'un élément
 	function checkLength( o, n, min, max ) {
 		if ( o.val().length > max || o.val().length < min ) {
@@ -33,8 +36,8 @@ $(document).ready(function(){
 		} else {
 			return true;
 		}
-	}
-	
+	};
+
 	// Vérification du format d'un élément
 	function checkRegexp( o, regexp, n ) {
 		if ( !( regexp.test( o.val() ) ) ) {
@@ -44,7 +47,8 @@ $(document).ready(function(){
 		} else {
 			return true;
 		}
-	}
+	};
+
 	
 /*********************************************************************************************************/
 /*												Nouveau dialog											 */
@@ -189,16 +193,18 @@ $(document).ready(function(){
 	});
 	
     
-    /*********************************************************************************************************/
-/*												Fonction											 */
+/*********************************************************************************************************/
+/*											Personnaliser											 */
 /*********************************************************************************************************/	
     
+	// Valider le formulaire avec un entrer
     $('#nouveauLogin,#nouveauPassword').keyup(function(e) { 
         if(e.keyCode == 13) {
             $("#nouveauValidation").trigger("click");
         }
     });
     
+    // Valider le formulaire avec un entrer
     $('#login, #password').keyup(function(e) { 
         if(e.keyCode == 13) {
             $("#validation").trigger("click");

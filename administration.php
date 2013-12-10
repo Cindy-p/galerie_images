@@ -1,5 +1,8 @@
 <?php
-$page = array("titre" => "Nicody Galerie - Administration");
+$page = array(
+        "titre" => "Nicody Galerie - Administration",
+        "script" => array( "js/administration.js")
+        );
 include("include/header.php");
 
 include("include/connexion.php");
@@ -7,28 +10,36 @@ include("include/connexion.php");
 
 <div id="listCategorie">
 	<ul>
+		<li><a href="#nouvelleCategorie">Nouvelle Catégorie</a></li>
 		<?php 
-			$sql = "SELECT * FROM categorie WHERE idutilisateur = ".$_SESSION['idutilisateur'];
-			$stm = $pdo->query($sql);
+			$sql = "SELECT * FROM categorie WHERE idutilisateur = :idutilisateur ";
+			$stm = $pdo->prepare($sql);
+			$stm->execute(array(":idutilisateur" => $_SESSION['idutilisateur']));
 			while( $categorie = $stm->fetch(PDO::FETCH_ASSOC) ){
 				echo "<li><a href='#categorie-".$categorie["idcategorie"]."'>".$categorie["nom"]."</a></li>";
 			}
 		?>
-		<li><a href="#nouvelleCategorie">Nouvelle Catégorie</a></li>
 	</ul>
+	<div id="nouvelleCategorie">
+		<label for="nomCategorie">Nom de la Catégorie</label>
+		<input type="text" name="nomCategorie" id="nomCategorie" class="text ui-widget-content ui-corner-all">		
+		<button id="confirmNomCategorie">Valider</button>
+		<p class="validateTips"></p>
+	</div>
 	<?php 
-		$sql = "SELECT * FROM categorie as c LEFT JOIN image as i ON c.idcategorie = i.idcategorie WHERE c.idutilisateur = ".$_SESSION['idutilisateur']."  ";
-		$stm = $pdo->query($sql);
+		$sql = "SELECT idutilisateur, c.idcategorie AS idcategorie, c.nom AS nomCategorie, idimage, description, lien FROM categorie as c LEFT JOIN image as i ON c.idcategorie = i.idcategorie WHERE c.idutilisateur = :idutilisateur";
+		$stm = $pdo->prepare($sql);
+		$stm->execute(array(":idutilisateur" => $_SESSION["idutilisateur"]));
 		while( $categorie = $stm->fetch(PDO::FETCH_ASSOC) ){
-			echo "" ;
+			echo "
+			<div id='categorie-".$categorie["idcategorie"]."'>
+				<h2><span id='nomCategorie-".$categorie["idcategorie"]."'>".$categorie["nomCategorie"]."</span>
+					<img id='supprimerCategorie-".$categorie["idcategorie"]."' src='img/croix.png' class='supprimerCategorie right petite_image curseur'/>
+				</h2>
+			</div>
+			" ;
 		}
 	?>
-	<div id="nouvelleCategorie">
-		<form>
-			<label for="login">Identifiant</label>
-			<input type="text" name="nouveauLogin" id="nouveauLogin" class="text ui-widget-content ui-corner-all">		
-		</form>
-	</div>
 </div>
 
 
