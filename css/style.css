@@ -159,7 +159,7 @@ a {
 	background: #ffffff;
 	padding: 5px;
 	border: 1px solid #cccccc;
-	position: absolute;
+	position: fixed;
 	z-index: 99999;
 }
 

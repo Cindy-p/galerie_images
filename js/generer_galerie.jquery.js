@@ -65,72 +65,72 @@
 				});
 			});
 
-			// Affichage de l'image en grande taille
-			$("img").click(function() {
-				if ($(this).parent().get(0) == $(".conteneurImage").get(0)) {
-					var imgPrec = "";
-				}
-				else {
-					var imgPrec = $(this).parent().prev().find("img");
-				}
-/*
-				if () {
+			var popup = function(lienImg) {
+				// On supprime la pop-up si elle existait déjà
+				// if ($("#popup").length)
+				// 	$("#popup").remove();
 
-				}
-				else {
-					
-				}
-*/
-				
-				var imgSuiv = $(this).parent().next().find("img");
+				// On crée la pop-up
+				$("#corps").append('<div id="popup"><img src="' + lienImg + '"/></div>');
 
-				// console.log(imgPrec);
-
-				$("#corps").append('<div id="popup"><img src="' + $(this).attr("src") + '"/></div>');
-				
-				console.log(imgPrec);
-				console.log(imgSuiv);
-
-				if (imgPrec != "") {
-					$("#popup").append('<span id="imgPrec"> < </span>');
-				}
-
-				if (imgSuiv != null) {
-					$("#popup").append('<span id="imgSuiv"> > </span>');
-				}
-				
-				
-
-				$("body").append('<div id="fade"></div>');
-
-				// console.log($("#popup").outerHeight());
-				// console.log($("#popup").outerWidth());
-
+				// Positionnement de la pop-up dans la page
 				$("#popup").css("top", Math.max(0, (($(window).height() - $("#popup").outerHeight()) / 2) + 
-                                                $(window).scrollTop()) + "px");
+	                                            $(window).scrollTop()) + "px");
 			    $("#popup").css("left", Math.max(0, (($(window).width() - $("#popup").outerWidth()) / 2) + 
-			                                                $(window).scrollLeft()) + "px");
+			                                    $(window).scrollLeft()) + "px");
 
-			    $("#popup img").css("width", $(window).width()*0.75);
+			    // Taille de l'image (de la pop-up)
+			    $("#popup img").css("width", $(window).width()*0.5);
 
-				if ($("#popup img").width() > $(window).width()) {
+			    /*if ($("#popup img").width() > $(window).width()) {
 					
 					$("#popup img").css("width", $(window).width()*0.75);
 					if ($("#popup img").height() > $(window).height()) {
 						$("#popup img").css("height", $(window).height()*0.75);
 					}
-				}
+				}*/
+			}
 
+			// Affichage de l'image en grande taille
+			$("img").click(function() {
+				popup($(this).attr("src"));
+
+				// On définit les liens des images suivantes et précédentes
+				if ($(this).parent().get(0) == $(".conteneurImage").get(0))
+					var imgPrec = "";
+				else
+					var imgPrec = $(this).parent().prev().find("img").attr("src");
+
+				if ($(this).parent().get(0) == $(".conteneurImage").last().get(0))
+					var imgSuiv = "";
+				else
+					var imgSuiv = $(this).parent().next().find("img").attr("src");
+
+				if (imgPrec != "")
+					$("#popup").append('<span id="imgPrec"> < </span>');
+
+				if (imgSuiv != "")
+					$("#popup").append('<span id="imgSuiv"> > </span>');
+
+				$("#imgPrec").click(function() {
+					popup(imgPrec);
+				});
 				
+				$("#imgPrec").click(function() {
+					// popup(imgSuiv);
+				});
+
+
+				// Affichage de la pop-up avec effet de fondu
 				$("#popup").fadeIn("fast");
-				/*$("#fade").show();*/
-
-				// $('body').append('<div id="fade"></div>');
+				// $("body").append('<div id="fade"></div>');
+				// $("#fade").show();
 			});
 
-			$("#fade").click(function() {
-				$("#popup, #fade").fadeOut("fast");
-			});
+			// $("#fade").click(function() {
+			// 	console.log("test");
+			// 	$("#popup, #fade").fadeOut("fast");
+			// });
 		});
 	};
 })(jQuery);
