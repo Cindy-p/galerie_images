@@ -73,14 +73,14 @@
 				else {
 					var imgPrec = $(this).parent().prev().find("img");
 				}
-
+/*
 				if () {
 
 				}
 				else {
 					
 				}
-
+*/
 				
 				var imgSuiv = $(this).parent().next().find("img");
 
