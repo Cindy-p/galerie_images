@@ -77,7 +77,7 @@ $(document).ready(function(){
                     // Tous les test valides
                     if ( estValide ) {
                         $.ajax({
-                            type: "GET",
+                            type: "POST",
                             url: "nouveau_utilisateur.php",
                             async : false,
                             data: { login: login.val(), email: email.val(), password: password.val() },
@@ -148,7 +148,7 @@ $(document).ready(function(){
                     // Tous les test valides
                     if ( estValide ) {
                         $.ajax({
-                            type: "GET",
+                            type: "POST",
                             url: "ancien_utilisateur.php",
                             async : false,
                             data: { login: login.val(),password: password.val() },
