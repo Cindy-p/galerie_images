@@ -35,7 +35,13 @@ include("include/connexion.php");
 			<div id='categorie-".$categorie["idcategorie"]."'>
 				<h2><span id='nomCategorie-".$categorie["idcategorie"]."'>".$categorie["nomCategorie"]."</span>
 					<img id='supprimerCategorie-".$categorie["idcategorie"]."' src='img/croix.png' class='supprimerCategorie right petite_image curseur'/>
+					<img id='editCategorie-".$categorie["idcategorie"]."' src='img/vert.png' class='editCategorie center petite_image curseur'/>
 				</h2>
+				<ul class='listImage'>
+				";
+  					//<li class='ui-state-default'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>test</li>
+ 				
+  				echo "</ul>
 			</div>
 			" ;
 		}

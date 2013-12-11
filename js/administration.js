@@ -1,6 +1,9 @@
 var tips = "";
 
 $(document).ready(function(){
+
+
+/***************************************Catégorie**************************************/
 	
     // Création de la liste de catégories
 	$( "#listCategorie" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
@@ -67,6 +70,14 @@ $(document).ready(function(){
 	        });
     	}
     });
+
+ /***************************************Images**************************************/
+    
+    // La liste d'image
+    $( ".listImage" ).sortable();
+    $( ".listImage" ).disableSelection();
+    
+    
     
     
 });

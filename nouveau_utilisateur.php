@@ -20,12 +20,13 @@
             if( preg_match($pattern_password,$password,$matches,PREG_OFFSET_CAPTURE) ){
             
                 // Insertion dans la base
-                $sql = "INSERT INTO utilisateur (login,password) VALUES ('".$login."',MD5('".$password."'))";
+                $sql = "INSERT INTO utilisateur (login,password) VALUES (:login,MD5(:password))";
                 try
                 {
                     // Début de la transaction
                     $pdo->beginTransaction();
-                    $pdo->query($sql);
+                    $stm = $pdo->prepare($sql);
+                    $stm->execute(array(":login" => $login, ":password" => $password ));
                     
                     // Validation de la transaction
                     $pdo->commit();                    
