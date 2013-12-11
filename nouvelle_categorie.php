@@ -23,8 +23,11 @@
 		
 			// Formatage du nom de dossier
     		$nomCategorie = format_dossier($nomCategorie);
-			mkdir(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie,0700);
-			$msg = "ok";
+			if ( !mkdir(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie,0700)){
+				$msg = "Le dossier ne s'est pas créé !";
+			} else {
+				$msg = "ok";
+			}
 		}
 		catch(Exception $e) //en cas d'erreur
 		{

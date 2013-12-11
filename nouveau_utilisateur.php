@@ -34,8 +34,11 @@
                     // Création de la session utilisateur
                     $_SESSION["utilisateur"] = $login;
                     $_SESSION["idutilisateur"] = $pdo->lastInsertId();
-                    mkdir(dirname(__FILE__)."/utilisateurs/".$login,0700);
-                    $msg = "ok";
+                    if ( !mkdir(dirname(__FILE__)."/utilisateurs/".$login,0700)){
+                    	$msg = "Le dossier ne s'est pas créé !";
+                    } else {
+                    	$msg = "ok";
+                    }
                 }
                 catch(Exception $e) //en cas d'erreur
                 {
