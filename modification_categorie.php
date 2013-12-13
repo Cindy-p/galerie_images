@@ -7,21 +7,32 @@
 	$idCategorie = intval(htmlspecialchars($_POST["idCategorie"]));
 	$nomCategorie = htmlspecialchars($_POST["nomCategorie"]);
 	
-	$sql = "DELETE FROM categorie WHERE idcategorie = :idcategorie" ;
+	
 	try
 	{
 		// Début de la transaction
 		$pdo->beginTransaction();
+		
+		// Récupération de l'ancien nom
+		$sql = "SELECT nom FROM categorie WHERE idcategorie = :idcategorie";
 		$stm = $pdo->prepare($sql);
-		$stm->execute(array(":idcategorie" => $idCategorie ));
+		$stm->execute(array(":idcategorie" => $idCategorie));
+		$row = $stm->fetch(PDO::FETCH_ASSOC);
+		$ancienNom = $row["nom"];
+		
+		// Mise à jours du nom dans la base 
+		$sql = "UPDATE categorie SET nom = :nom WHERE idcategorie = :idcategorie" ;
+		$stm = $pdo->prepare($sql);
+		$stm->execute(array(":idcategorie" => $idCategorie, ":nom" => $nomCategorie ));
 	
 		// Validation de la transaction
 		$pdo->commit();
 	
-		// Formatage du nom de dossier
+		// Formatage des noms de dossier
+		$ancienNom = format_dossier($ancienNom);
     	$nomCategorie = format_dossier($nomCategorie);
-		if ( !rmdir(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie)){
-			$msg = "Le dossier ne s'est pas supprimé !";
+		if ( !rename(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$ancienNom, dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie)){
+			$msg = "Le dossier n'a pas changé de nom !";
 		} else {
 			$msg = "ok";
 		}

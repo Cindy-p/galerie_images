@@ -16,7 +16,7 @@ include("include/connexion.php");
 			$stm = $pdo->prepare($sql);
 			$stm->execute(array(":idutilisateur" => $_SESSION['idutilisateur']));
 			while( $categorie = $stm->fetch(PDO::FETCH_ASSOC) ){
-				echo "<li><a href='#categorie-".$categorie["idcategorie"]."'>".$categorie["nom"]."</a></li>";
+				echo "<li><a href='#categorie-".$categorie["idcategorie"]."' class='categorie-".$categorie["idcategorie"]."'>".$categorie["nom"]."</a></li>";
 			}
 		?>
 	</ul>
@@ -35,7 +35,18 @@ include("include/connexion.php");
 			<div id='categorie-".$categorie["idcategorie"]."'>
 				<h2><span id='nomCategorie-".$categorie["idcategorie"]."'>".$categorie["nomCategorie"]."</span>
 					<img id='supprimerCategorie-".$categorie["idcategorie"]."' src='img/croix.png' class='supprimerCategorie right petite_image curseur'/>
+					<img id='editCategorie-".$categorie["idcategorie"]."' src='img/vert.png' class='editCategorie center petite_image curseur'/>
 				</h2>
+				<div id='formImage'></div>
+				<button id='nouvelleImage' class='ui-state-default'>Nouvelle Image</button>
+				<br/><br/>
+				<ul class='listImage'>
+					<li id='nouvelleImage' class='ui-state-default'>test</li>
+ 				
+				";
+  					//<li class='ui-state-default'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>test</li>
+ 				
+  				echo "</ul>
 			</div>
 			" ;
 		}

@@ -4,8 +4,8 @@
 	include("include/connexion.php");
 	include("include/fonction.php");
 	
-	$idCategorie = intval(htmlspecialchars($_POST["idCategorie"]));
-	$nomCategorie = htmlspecialchars($_POST["nomCategorie"]);
+	$idCategorie = intval(htmlspecialchars($_GET["idCategorie"]));
+	$nomCategorie = htmlspecialchars($_GET["nomCategorie"]);
 	
 	$sql = "DELETE FROM categorie WHERE idcategorie = :idcategorie" ;
 	try
@@ -20,11 +20,8 @@
 	
 		// Formatage du nom de dossier
     	$nomCategorie = format_dossier($nomCategorie);
-		if ( !rmdir(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie)){
-			$msg = "Le dossier ne s'est pas supprimé !";
-		} else {
-			$msg = "ok";
-		}
+		rmdir(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie);
+		$msg = "ok";
 	}
 	catch(Exception $e) //en cas d'erreur
 	{
