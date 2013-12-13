@@ -2,6 +2,22 @@
 	$.fn.genererGalerie = function(parametres) {
 		
 		return this.each(function() {
+			function precharger(listeImages) {
+			    $(listeImages).each(function() {
+					$('<img/>')[0].src = this;
+					/*console.log($('<img/>')[0].src);*/
+			    });
+			}
+
+			precharger([
+				'img/utilisateur1/noel/noel1.jpg',
+				'img/utilisateur1/noel/noel2.jpg',
+				'img/utilisateur1/noel/noel3.jpg',
+				'img/utilisateur1/chats/chat1.jpg',
+				'img/utilisateur1/chats/chat2.jpg',
+				'img/utilisateur1/chats/chat3.jpg'
+			]);
+
 			var divConteneurImage = $("#galerie img").parent();
 			divConteneurImage.addClass('conteneurImage');
 
@@ -65,70 +81,81 @@
 				});
 			});
 
-			var popup = function(lienImg) {
+			var centrer = function(objet) {
+				objet.css("top", Math.max(0, (($(window).height() - objet.outerHeight()) / 2) + $(window).scrollTop()) + "px");
+			    objet.css("left", Math.max(0, (($(window).width() - objet.outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+			};
+
+			// Permet de générer la popup
+			var popup = function(img) {
 				// On supprime la pop-up si elle existait déjà
-				// if ($("#popup").length)
-				// 	$("#popup").remove();
+				if ($("#popup").length)
+					$("#popup").remove();
 
 				// On crée la pop-up
-				$("#corps").append('<div id="popup"><img src="' + lienImg + '"/></div>');
+				$("#corps").append('<div id="popup"><img src="' + img.attr("src") + '"/></div>');
+				
+				// Taille de l'image se situant dans la pop-up
+				$("#popup img").css("width", $(window).width()*0.5);
 
-				// Positionnement de la pop-up dans la page
-				$("#popup").css("top", Math.max(0, (($(window).height() - $("#popup").outerHeight()) / 2) + 
-	                                            $(window).scrollTop()) + "px");
-			    $("#popup").css("left", Math.max(0, (($(window).width() - $("#popup").outerWidth()) / 2) + 
-			                                    $(window).scrollLeft()) + "px");
-
-			    // Taille de l'image (de la pop-up)
-			    $("#popup img").css("width", $(window).width()*0.5);
-
-			    /*if ($("#popup img").width() > $(window).width()) {
-					
+				// En cas de dépassement des images du viewport
+				/*if ($("#popup img").width() > $(window).width()) {
 					$("#popup img").css("width", $(window).width()*0.75);
 					if ($("#popup img").height() > $(window).height()) {
 						$("#popup img").css("height", $(window).height()*0.75);
 					}
 				}*/
-			}
-
-			// Affichage de l'image en grande taille
-			$("img").click(function() {
-				popup($(this).attr("src"));
 
 				// On définit les liens des images suivantes et précédentes
-				if ($(this).parent().get(0) == $(".conteneurImage").get(0))
-					var imgPrec = "";
-				else
-					var imgPrec = $(this).parent().prev().find("img").attr("src");
+				if (img.parent().get(0) == $(".conteneurImage").get(0)) // Première image (de la catégorie > à faire)
+					var imgPrec = ""; // Pas de lien précédent
+				else {
+					var imgPrec = img.parent().prev().find("img");
+				}
+					
 
-				if ($(this).parent().get(0) == $(".conteneurImage").last().get(0))
-					var imgSuiv = "";
-				else
-					var imgSuiv = $(this).parent().next().find("img").attr("src");
+				if (img.parent().get(0) == $(".conteneurImage").last().get(0)) // Dernière image (de la catégorie > à faire)
+					var imgSuiv = ""; // Pas de lien suivant
+				else {
+					var imgSuiv = img.parent().next().find("img");
 
+					console.log(jQuery.isEmptyObject(imgSuiv));
+					console.log(imgSuiv);
+
+					if (jQuery.isEmptyObject(imgSuiv))
+						console.log("ok");
+				}
+
+				// On associe ces liens aux symboles permettant la navigation
 				if (imgPrec != "")
 					$("#popup").append('<span id="imgPrec"> < </span>');
 
 				if (imgSuiv != "")
 					$("#popup").append('<span id="imgSuiv"> > </span>');
 
+				// Passage à l'image précédente ou suivante
 				$("#imgPrec").click(function() {
 					popup(imgPrec);
 				});
 				
-				$("#imgPrec").click(function() {
-					// popup(imgSuiv);
+				$("#imgSuiv").click(function() {
+					popup(imgSuiv);
 				});
 
-
-				// Affichage de la pop-up avec effet de fondu
+				// Positionnement de la pop-up dans la page et affichage
+				centrer($("#popup"));
 				$("#popup").fadeIn("fast");
+			};
+
+			$("#galerie img").click(function() {
+				popup($(this));
+				
 				// $("body").append('<div id="fade"></div>');
 				// $("#fade").show();
 			});
 
 			// $("#fade").click(function() {
-			// 	console.log("test");
+			// 	console.log("click fade");
 			// 	$("#popup, #fade").fadeOut("fast");
 			// });
 		});

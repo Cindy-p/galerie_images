@@ -42,6 +42,17 @@
 							</ul>
 						</div>
 					</div>
+					<div>
+						<img src="img/utilisateur1/noel/noel4.jpg" alt=""/>
+						<div>
+							<span>Noël 4</span>
+							<p>Description 4</p>
+							<ul>
+								<li>Boules</li>
+								<li>Décorations</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 				<div class="chats">
 					<div>
@@ -78,6 +89,5 @@
 			</div>
 		</div>
 <?php
-
-    include ("include/footer.php");
+	 include ("include/footer.php");
 ?>
