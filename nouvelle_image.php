@@ -4,42 +4,103 @@
 	include("include/connexion.php");
 	include("include/fonction.php");
 	
-	$nomCategorie = $_POST["nomCategorie"];
-	$pattern_nomCategorie = '/^[a-zA-Z0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]*$/';
- 
-    if( preg_match($pattern_nomCategorie,$nomCategorie) ){
-    	// Protection contre les erreurs
-    	$nomCategorie = htmlspecialchars($nomCategorie);
-		
-		$sql = "INSERT INTO categorie (nom,idutilisateur) VALUES ('".$nomCategorie."','".$_SESSION['idutilisateur']."')";
-		try
-		{
-			// Début de la transaction
-			$pdo->beginTransaction();
-			$pdo->query($sql);
-		
-			// Validation de la transaction
-			$pdo->commit();
-		
-			// Formatage du nom de dossier
-    		$nomCategorie = format_dossier($nomCategorie);
-			mkdir(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie,0700);
-			$msg = "ok";
+	
+	var_dump($_POST);
+	
+	$extensionsAutorise = array("gif", "jpeg", "jpg", "png");
+	$temp = explode(".", $_FILES["file"]["name"]);
+	$extension = end($temp);
+	if ((($_FILES["file"]["type"] == "image/gif")
+		|| ($_FILES["file"]["type"] == "image/jpeg")
+		|| ($_FILES["file"]["type"] == "image/jpg")
+		|| ($_FILES["file"]["type"] == "image/pjpeg")
+		|| ($_FILES["file"]["type"] == "image/x-png")
+		|| ($_FILES["file"]["type"] == "image/png"))
+		//&& ($_FILES["file"]["size"] < 20000)
+		&& in_array($extension, $extensionsAutorise)){
+	
+		// Vérification de la création du fichier temporaire
+		if ($_FILES["file"]["error"] > 0){
+			$msg = "Error: " . $_FILES["file"]["error"] . "<br>";
+		} else {
+			echo "Upload: " . $_FILES["file"]["name"] . "<br>";
+			echo "Type: " . $_FILES["file"]["type"] . "<br>";
+			echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+			echo "Stored in: " . $_FILES["file"]["tmp_name"];
+			  
+			// Récupération des données
+			$nom = $_POST["nom"];
+			$description = htmlspecialchars($_POST["description"]);
+			$idCategorie = $_POST["formIdCategorie"];
+			$pattern_nom = '/^[a-zA-Z0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]*$/';
+			$nom = htmlspecialchars($nom);
+	
+			// Vérification du format des éléments du formulaire
+			if( preg_match($pattern_nom,$nom) ){
+				
+				try
+				{
+					$sql = "SELECT * FROM categorie WHERE idcategorie = :idCategorie";
+					
+					// Début de la transaction
+					$pdo->beginTransaction();
+					$stm = $pdo->prepare($sql);
+					$stm->execute(array("idCategorie" => $idCategorie));
+					$rowCategorie = $stm->fetch(PDO::FETCH_ASSOC);
+					
+					// Enregistrement du fichier
+					$nb = 1;
+					$fichier = "";
+					$fichierFinal = $_FILES["file"]["name"];
+					if (file_exists(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$rowCategorie['nom']."/".$_FILES["file"]["name"]))
+					{
+						$temp = explode(".", $_FILES["file"]["name"]);
+						$nbPart = count($temp);
+						$fichier = $temp[0];
+						for( $i = 1 ; $i < $nbPart-1 ; ++$i){
+							$fichier = $fichier.".".$temp[$i];
+						}
+						$fichierFinal = $fichier."(".$nb.").".$extension;
+						while( file_exists(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$rowCategorie['nom']."/".$fichierFinal) ){
+							++$nb;
+							$fichierFinal = $fichier."(".$nb.").".$extension;
+						}
+					}
+					echo dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$rowCategorie['nom']."/".$fichierFinal;
+					// Vérification de l'intégration de l'image dans notre système de fichier
+					if ( move_uploaded_file($_FILES["file"]["tmp_name"],dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$rowCategorie['nom']."/".$fichierFinal)){
+					
+						$sql = "INSERT INTO image (nom,description,lien,idCategorie) VALUES (:nom,:description,:lien,:idCategorie)";
+						$stm = $pdo->prepare($sql);
+						$stm->execute(array(":nom" => $nom, ":description" => $description, ":lien" => $fichierFinal, "idCategorie" => $idCategorie));
+						
+						// Validation de la transaction
+						$pdo->commit();
+					
+						$msg = "ok";
+						
+					} else {
+						 $msg = "L'image n'est pas enregistrée !";
+					}
+				}
+				catch(Exception $e) //en cas d'erreur
+				{
+					// Annulation de la transaction
+					$pdo->rollback();
+				
+					echo 'Erreur : '.$e->getMessage().'<br />';
+					echo 'N° : '.$e->getCode();
+					$msg =" Il y a eu un problème lors de l'insertion en base !";
+				}
+			
+			} else {
+				$msg =" Le format du nom ne correspond pas aux exigences des administrateurs !";
+			}
+			
 		}
-		catch(Exception $e) //en cas d'erreur
-		{
-			// Annulation de la transaction
-			$pdo->rollback();
-		
-			echo 'Erreur : '.$e->getMessage().'<br />';
-			echo 'N° : '.$e->getCode();
-			$msg =" Il y a eu un problème lors de l'insertion en base !";
-		}
-
-    } else {
-    	$msg =" Le format ne correspond pas aux exigences des administrateurs   !";
-    }
-
+	} else {
+		$msg =" Le format du fichier n'est pas une image qui correspond aux exigences des administrateurs !";
+	}
 	include("include/deconnexion.php");
 	
 	echo json_encode(array('msg' => $msg));
