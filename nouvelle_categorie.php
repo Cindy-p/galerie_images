@@ -11,13 +11,15 @@
     	// Protection contre les erreurs
     	$nomCategorie = htmlspecialchars($nomCategorie);
 		
-		$sql = "INSERT INTO categorie (nom,idutilisateur) VALUES ('".$nomCategorie."','".$_SESSION['idutilisateur']."')";
 		try
 		{
+			$sql = "INSERT INTO categorie (nom,idutilisateur) VALUES (:nomCategorie,:idutilisateur)";
+			
 			// Début de la transaction
 			$pdo->beginTransaction();
-			$pdo->query($sql);
-		
+			$stm = $pdo->prepare($sql);
+            $stm->execute(array(":nomCategorie" => $nomCategorie, ":idutilisateur" => $_SESSION['idutilisateur'] ));
+            
 			// Validation de la transaction
 			$pdo->commit();
 		
@@ -40,7 +42,7 @@
 		}
 
     } else {
-    	$msg =" Le format ne correspond pas aux exigences des administrateurs   !";
+    	$msg =" Le format ne correspond pas aux exigences des administrateurs !";
     }
 
 	include("include/deconnexion.php");

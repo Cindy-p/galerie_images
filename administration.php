@@ -6,6 +6,14 @@ $page = array(
 include("include/header.php");
 
 include("include/connexion.php");
+
+	if ( isset($_POST["idCategorie"])){
+		$idCategorie = $_POST["idCategorie"];
+		echo "<input id='currentCategorie' type='hidden' value='".$idCategorie."'/>";
+	} else {
+		echo "<input id='currentCategorie' type='hidden'/>";
+	}
+
 ?>
 
 <div id="listCategorie">
@@ -27,6 +35,7 @@ include("include/connexion.php");
 		<p class="validateTips"></p>
 	</div>
 	<?php 
+		// Récupération des catégories
 		$sql = "SELECT idutilisateur, c.idcategorie AS idcategorie, c.nom AS nomCategorie, idimage, description, lien FROM categorie as c LEFT JOIN image as i ON c.idcategorie = i.idcategorie WHERE c.idutilisateur = :idutilisateur";
 		$stm = $pdo->prepare($sql);
 		$stm->execute(array(":idutilisateur" => $_SESSION["idutilisateur"]));
@@ -41,11 +50,15 @@ include("include/connexion.php");
 				<button id='nouvelleImage' class='ui-state-default'>Nouvelle Image</button>
 				<br/><br/>
 				<ul class='listImage'>
-					<li id='nouvelleImage' class='ui-state-default'>test</li>
  				
 				";
-  					//<li class='ui-state-default'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>test</li>
- 				
+				// Récupération des images
+				$sql = "SELECT idimage, nom FROM image WHERE idcategorie = :idcategorie";
+				$stm = $pdo->prepare($sql);
+				$stm->execute(array(":idcategorie" => $categorie["idcategorie"]));
+				while( $image = $stm->fetch(PDO::FETCH_ASSOC) ){
+  					echo "<li class='ui-state-default idImage-".$image["idimage"]."'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>".$image["nom"]."</li>";
+				}
   				echo "</ul>
 			</div>
 			" ;

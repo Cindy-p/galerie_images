@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 	var nom = "";
 	var description = "";
-	var lien = "";
+	var file = "";
 	var allFields = "";
 	
 
@@ -121,6 +121,14 @@ $(document).ready(function(){
 	        });
     	}
     });
+    
+    // Ouvriri la bonne catégorie
+    $(".categorie-"+$("#currentCategorie").val()).trigger("click");
+    
+    // Stock la catégorie en cours
+    $("a[role=presentation]").on("click",function(){
+    	$("#currentCategorie").val(($(this).attr('href').split("#categorie-"))[1]);
+    });
 
  /***************************************Images**************************************/
     
@@ -131,7 +139,8 @@ $(document).ready(function(){
     
     // Création d'un nouvelle image
     $("#nouvelleImage").on("click", function(){
-    	var url = "formImage.php";
+    	var idCategorie = ($(this).parent().attr("id").split("categorie-"))[1];
+    	var url = "formImage.php?idCategorie="+idCategorie;
     	
     	// Chargement du formulaire
     	$("#formImage").load(url);
@@ -147,53 +156,21 @@ $(document).ready(function(){
 	                text: "Création de votre image",
 	                id: "creationImage",
 	                click: function() {
-	                    var estValide = true;
-	                    allFields.removeClass( "ui-state-error" );
-	                    
-	                    // Test de longueur
-	                    estValide = estValide && checkLength( nom, "nom", 1, 50 );
-	                    estValide = estValide && checkLength( description, "description", 0, 255 );
-	                    estValide = estValide && checkLength( lien, "fichier", 1, 255 );
-	                    
-	                    // Test de format
-	                    estValide = estValide && checkRegexp( nom, /^[a-z]([0-9a-zA-Z_])+$/i, "Le nom peut être composé de chiffre, lettre minuscule et majuscule!" );
-	                    estValide = estValide && checkRegexp( lien, /^([0-9a-zA-Z])+$/, "Le nom de fichier peut être composé de chiffre, lettre minuscule et majuscule" );
-	                    
-	                    // Tous les test valides
-	                    if ( estValide ) {/*
-	                        $.ajax({
-	                            type: "POST",
-	                            url: "nouveau_utilisateur.php",
-	                            async : false,
-	                            data: { login: login.val(), email: email.val(), password: password.val() },
-	                            dataType : "json",
-	                            statusCode: {
-	                                404: function() {
-	                                alert( "La page est introuvable !");
-	                                }
-	                            },
-	                            success: function (data){
-	                                if( data.msg != "ok"){
-	                                    $("#textAncien").text(data.msg);
-	                               } else {
-	                                    $(location).attr('href',"index.php");
-	                               }
-	                            }
-	                        });*/
-	                    	// Suppression du formulaire
-	                    	$(this).html();
-	                        $( this ).dialog( "close" );
-	                    }
-	                }
+						//$.post('nouvelle_image.php', $('#formulaireImage').serialize())
+						//$("#formulaireImage").submit();
+						// Suppression du formulaire
+						$(this).html();
+						$(this).dialog("close");
+					}
 				},
 				Annuler: function() {
 					// Suppression du formulaire
                 	$(this).html();
-					$( this ).dialog( "close" );
+					$(this).dialog("close");
 				}
 			},
 			Fermer: function() {
-				allFields.val( "" ).removeClass( "ui-state-error" );
+				allFields.val("").removeClass("ui-state-error");
 			}
 		});
 		
