@@ -55,6 +55,8 @@ a {
 }
 
 #galerie {
+	margin: auto;
+	width: 90%;
 	text-align: center;
 }
 
@@ -97,12 +99,11 @@ a {
 	cursor: pointer;
 }
 
-.titre {
-	width: 100%;
-	display: inline-block;
+.conteneurImage .titre {
+	display: block;
 	font-weight: bold;
 	text-align: left;
-	padding: 5px;
+	padding: 3px 3px 3px 5px;
 	/*border-bottom: 1px dashed black;*/
 }
 
@@ -123,7 +124,7 @@ a {
 
 }
 
-.description {
+.conteneurImage .description {
 	display: none;
 	position: absolute;
 	background-color: #444444;
@@ -161,6 +162,7 @@ a {
 	border: 1px solid #cccccc;
 	position: fixed;
 	z-index: 99999;
+	text-align: left;
 }
 
 #popup img {
@@ -171,6 +173,24 @@ a {
 	cursor: pointer;
 }
 
-img.btn_fermer {
-	float: right;
+#imgPrec, #imgSuiv {
+	position: absolute;
 }
+
+#imgPrec {
+	left: 5px;
+	top: 100px;
+}
+
+#imgSuiv {
+	right: 5px;
+	top: 100px;
+}
+
+#popup .titre {
+	display: block;
+	font-weight: bold;
+}
+
+/*#popup .description {
+}*/

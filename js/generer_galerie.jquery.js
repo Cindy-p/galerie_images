@@ -145,11 +145,21 @@
 				}
 
 				// On associe ces liens aux symboles permettant la navigation
-				if (imgPrec != "")
-					$("#popup").append('<span id="imgPrec"> < </span>');
+				if (imgPrec != "") {
+					$("#popup").append('<span id="imgPrec"><img src="img/fleche_precedente.png"/></span>');
+					// $("#imgPrec").css("top", (img.height()/2) - 50 + "px");
+				}
+					
+				if (imgSuiv != "") {
+					$("#popup").append('<span id="imgSuiv"><img src="img/fleche_suivante.png"/></span>');
+				}
 
-				if (imgSuiv != "")
-					$("#popup").append('<span id="imgSuiv"> > </span>');
+				$("#popup").append('<span class="titre">' + img.parent().find('.titre').text() + '</span>');
+				$("#popup").append('<span class="description">' + img.parent().find('.description').text() + '</span>');
+
+				console.log($("#popup img").width());
+				// console.log($("#imgPrec img").height());
+				// console.log($("#imgSuiv img").height());
 
 				// Passage à l'image précédente ou suivante
 				$("#imgPrec").click(function() {
@@ -172,9 +182,9 @@
 				$('#fade').css({'filter' : 'alpha(opacity=30)'}).show(); // Pour IE
 			});
 
-			$("#fade").click(function() {
-				console.log("click fade");
-				$("#popup, #fade").fadeOut("fast");
+
+			$('body').on('click', '#fade', function() {
+				$('#fade, #popup').fadeOut("fast");
 			});
 		});
 	};
