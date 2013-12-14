@@ -38,7 +38,7 @@
 					// Début de la transaction
 					$pdo->beginTransaction();
 					$stm = $pdo->prepare($sql);
-					$stm->execute(array("idCategorie" => $idCategorie));
+					$stm->execute(array(":idCategorie" => $idCategorie));
 					$rowCategorie = $stm->fetch(PDO::FETCH_ASSOC);
 					
 					// Enregistrement du fichier

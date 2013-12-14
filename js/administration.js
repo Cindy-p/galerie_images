@@ -48,7 +48,7 @@ $(document).ready(function(){
     	}
     });
     
-    // Modification d'un catégorie
+    // Modification d'une catégorie
     $(".editCategorie").on("click", function(){
     	
     	var idCategorie = ($(this).attr("id").split("editCategorie-"))[1];
@@ -94,7 +94,7 @@ $(document).ready(function(){
     });
     
     
-    // Suppression d'un catégorie
+    // Suppression d'une catégorie
     $(".supprimerCategorie").on("click",function(){
     	if(confirm("Voulez-vous réellement supprimer une catégorie ?\n(L'intégralité des images de son contenu sera supprimé)")){
     		var idCategorie = ($(this).attr("id").split("supprimerCategorie-"))[1];
@@ -137,7 +137,7 @@ $(document).ready(function(){
     $( ".listImage" ).disableSelection();
     
     
-    // Création d'un nouvelle image
+    // Création d'une nouvelle image
     $("#nouvelleImage").on("click", function(){
     	var idCategorie = ($(this).parent().attr("id").split("categorie-"))[1];
     	var url = "formImage.php?idCategorie="+idCategorie;
@@ -157,10 +157,6 @@ $(document).ready(function(){
 	                id: "creationImage",
 	                click: function() {
 			
-						console.log("avant");
-						//$.post('nouvelle_image.php', $('#formulaireImage').serialize())
-						
-					
 						$("#formulaireImage").ajaxSubmit({
 							success: function(data) {
 								var data = $.parseJSON(data);
@@ -173,11 +169,6 @@ $(document).ready(function(){
 								}
 							}
 			            });
-						
-						console.log("apres");
-						// Suppression du formulaire
-						//$(this).html();
-						//$(this).dialog("close");
 					}
 				},
 				Annuler: function() {
@@ -196,31 +187,86 @@ $(document).ready(function(){
 		
     });
     
- // Suppression d'une image
+ // Modificaton d'une image
+    $(".editImage").on("click", function(){
+    	var idCategorie = ($(this).parent().parent().attr("id").split("categorie-"))[1];
+    	var idImage = ($(this).attr("id").split("idImage-"))[1];
+    	var url = "formImage.php?idCategorie="+idCategorie+"&idImage="+idImage;
+    	
+    	// Chargement du formulaire
+    	$("#formImage").load(url);
+    	
+    	// Création de la dialog
+		$("#formImage").dialog({
+			autoOpen: false,
+			height: 350,
+			width: 350,
+			modal: true,
+			buttons: {
+				"Modification de votre image":{
+	                text: "Modification de votre image",
+	                id: "modifierImage",
+	                click: function() {
+					
+						$("#formulaireImage").ajaxSubmit({
+							success: function(data) {
+								var data = $.parseJSON(data);
+								if( data.msg != "ok"){
+									console.log(data);
+								} else {
+									var post = new Array();
+									post["idCategorie"] = idCategorie ;
+									locationPost("administration.php", post );
+								}
+							}
+			            });
+					}
+				},
+				Annuler: function() {
+					// Suppression du formulaire
+                	$(this).html();
+					$(this).dialog("close");
+				}
+			},
+			Fermer: function() {
+				allFields.val("").removeClass("ui-state-error");
+			}
+		});
+		
+		// Lancement de la dialog
+		$("#formImage").dialog("open");
+		
+    });
+    
+    // Suppression d'une image
     $(".supprimerImage").on("click",function(){
-    		var idImage = ($(this).attr("id").split("supprimerImage-"))[1];
-    		console.log(idImage);
-    		$.ajax({
-	            type: "POST",
-	            url: "supprimer_image.php",
-	            async : false,
-	            data: { idImage : idImage },
-	            dataType : "json",
-	            statusCode: {
-	                404: function() {
-	                alert( "La page est introuvable !");
-	                }
-	            },
-	            success: function (data){
-	                if( data.msg != "ok"){
-	                	 console.log(data.msg);
-	               } else {
-						var post = new Array();
-						post["idCategorie"] = ($(this).parent().attr("id").split("categorie-"))[1]; ;
-						locationPost("administration.php", post );
-	               }
-	            }
-	        });
+    	var idCategorie = ($(this).parent().parent().parent().attr("id").split("categorie-"))[1];
+		var idImage = ($(this).attr("id").split("supprimerImage-"))[1];
+		console.log(idImage);
+		$.ajax({
+            type: "POST",
+            url: "supprimer_image.php",
+            async : false,
+            data: { idImage : idImage },
+            dataType : "json",
+            statusCode: {
+                404: function() {
+                alert( "La page est introuvable !");
+                }
+            },
+            success: function (data){
+            	// Problème de unlink incompréhensible
+              
+            /*  if( data.msg != "ok"){
+                	 console.log(data.msg);
+               } else {*/
+            	 	console.log(data.msg);
+					var post = new Array();
+					post["idCategorie"] = idCategorie;
+					locationPost("administration.php", post );
+               //}
+            }
+        });
     });
     
 });

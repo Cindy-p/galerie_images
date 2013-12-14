@@ -37,9 +37,9 @@ include("include/connexion.php");
 	<?php 
 		// Récupération des catégories
 		$sql = "SELECT idutilisateur, c.idcategorie AS idcategorie, c.nom AS nomCategorie, idimage, description, lien FROM categorie as c LEFT JOIN image as i ON c.idcategorie = i.idcategorie WHERE c.idutilisateur = :idutilisateur";
-		$stm = $pdo->prepare($sql);
-		$stm->execute(array(":idutilisateur" => $_SESSION["idutilisateur"]));
-		while( $categorie = $stm->fetch(PDO::FETCH_ASSOC) ){
+		$stmCategorie = $pdo->prepare($sql);
+		$stmCategorie->execute(array(":idutilisateur" => $_SESSION["idutilisateur"]));
+		while( $categorie = $stmCategorie->fetch(PDO::FETCH_ASSOC) ){
 			echo "
 			<div id='categorie-".$categorie["idcategorie"]."'>
 				<h2><span id='nomCategorie-".$categorie["idcategorie"]."'>".$categorie["nomCategorie"]."</span>
@@ -47,21 +47,20 @@ include("include/connexion.php");
 					<img id='editCategorie-".$categorie["idcategorie"]."' src='img/vert.png' class='editCategorie center petite_image curseur'/>
 				</h2>
 				<div id='formImage'></div>
-				<button id='nouvelleImage' class='ui-state-default'>Nouvelle Image</button>
-				<br/><br/>
-				<ul class='listImage'>
- 				
+					<button id='nouvelleImage' class='ui-state-default'>Nouvelle Image</button>
+					<br/><br/>
+					<ul class='listImage'>
 				";
-				// Récupération des images
-				$sql = "SELECT idimage, nom FROM image WHERE idcategorie = :idcategorie";
-				$stm = $pdo->prepare($sql);
-				$stm->execute(array(":idcategorie" => $categorie["idcategorie"]));
-				while( $image = $stm->fetch(PDO::FETCH_ASSOC) ){
-  					echo "<li class='ui-state-default idImage-".$image["idimage"]."'>
-  							<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>".$image["nom"]."
-  							<img id='supprimerImage-".$image["idimage"]."' src='img/croix.png' class='supprimerImage right petite_image curseur'/>
-  						</li>";
-				}
+					// Récupération des images
+					$sql = "SELECT idimage, nom FROM image WHERE idcategorie = :idcategorie";
+					$stmImage = $pdo->prepare($sql);
+					$stmImage->execute(array(":idcategorie" => $categorie["idcategorie"]));
+					while( $image = $stmImage->fetch(PDO::FETCH_ASSOC) ){
+	  					echo "<li id='idImage-".$image["idimage"]."' class='ui-state-default editImage'>
+	  							<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>".$image["nom"]."
+	  							<img id='supprimerImage-".$image["idimage"]."' src='img/croix.png' class='supprimerImage right petite_image curseur'/>
+	  						</li>";
+					}
   				echo "</ul>
 			</div>
 			" ;
