@@ -4,24 +4,33 @@
 	include("include/connexion.php");
 	include("include/fonction.php");
 	
-	$idCategorie = intval(htmlspecialchars($_GET["idCategorie"]));
-	$nomCategorie = htmlspecialchars($_GET["nomCategorie"]);
+	$idImage = intval(htmlspecialchars($_POST["idImage"]));
 	
-	$sql = "DELETE FROM categorie WHERE idcategorie = :idcategorie" ;
 	try
 	{
+		$sql = "SELECT * FROM image WHERE idimage = :idimage" ;
+	
 		// Début de la transaction
 		$pdo->beginTransaction();
 		$stm = $pdo->prepare($sql);
-		$stm->execute(array(":idcategorie" => $idCategorie ));
+		$stm->execute(array(":idimage" => $idImage ));
+		$rowImage = $stm->fetch(PDO::FETCH_ASSOC);
+		$nomImage = $rowImage["lien"];
+		
+		// Suppresion de l'image en base 
+		$sql = "DELETE FROM image WHERE idimage = :idimage" ;
+		$stm = $pdo->prepare($sql);
+		$stm->execute(array(":idimage" => $idImage ));
 	
 		// Validation de la transaction
 		$pdo->commit();
 	
-		// Formatage du nom de dossier
-    	$nomCategorie = format_dossier($nomCategorie);
-		rmdir(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie);
-		$msg = "ok";
+		// Suppresion de l'image en vrai
+		if ( !unlink(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomImage)){
+			$msg = "L'image ne s'est pas supprimée !";
+		} else {
+			$msg = "ok";
+		}
 	}
 	catch(Exception $e) //en cas d'erreur
 	{

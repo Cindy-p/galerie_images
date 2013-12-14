@@ -4,9 +4,6 @@
 	include("include/connexion.php");
 	include("include/fonction.php");
 	
-	
-	var_dump($_POST);
-	
 	$extensionsAutorise = array("gif", "jpeg", "jpg", "png");
 	$temp = explode(".", $_FILES["file"]["name"]);
 	$extension = end($temp);
@@ -23,10 +20,6 @@
 		if ($_FILES["file"]["error"] > 0){
 			$msg = "Error: " . $_FILES["file"]["error"] . "<br>";
 		} else {
-			echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-			echo "Type: " . $_FILES["file"]["type"] . "<br>";
-			echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-			echo "Stored in: " . $_FILES["file"]["tmp_name"];
 			  
 			// Récupération des données
 			$nom = $_POST["nom"];
@@ -66,7 +59,6 @@
 							$fichierFinal = $fichier."(".$nb.").".$extension;
 						}
 					}
-					echo dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$rowCategorie['nom']."/".$fichierFinal;
 					// Vérification de l'intégration de l'image dans notre système de fichier
 					if ( move_uploaded_file($_FILES["file"]["tmp_name"],dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$rowCategorie['nom']."/".$fichierFinal)){
 					

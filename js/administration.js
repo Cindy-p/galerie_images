@@ -156,11 +156,28 @@ $(document).ready(function(){
 	                text: "Création de votre image",
 	                id: "creationImage",
 	                click: function() {
+			
+						console.log("avant");
 						//$.post('nouvelle_image.php', $('#formulaireImage').serialize())
-						//$("#formulaireImage").submit();
+						
+					
+						$("#formulaireImage").ajaxSubmit({
+							success: function(data) {
+								var data = $.parseJSON(data);
+								if( data.msg != "ok"){
+									console.log(data);
+								} else {
+									var post = new Array();
+									post["idCategorie"] = idCategorie ;
+									locationPost("administration.php", post );
+								}
+							}
+			            });
+						
+						console.log("apres");
 						// Suppression du formulaire
-						$(this).html();
-						$(this).dialog("close");
+						//$(this).html();
+						//$(this).dialog("close");
 					}
 				},
 				Annuler: function() {
@@ -177,6 +194,33 @@ $(document).ready(function(){
 		// Lancement de la dialog
 		$("#formImage").dialog("open");
 		
+    });
+    
+ // Suppression d'une image
+    $(".supprimerImage").on("click",function(){
+    		var idImage = ($(this).attr("id").split("supprimerImage-"))[1];
+    		console.log(idImage);
+    		$.ajax({
+	            type: "POST",
+	            url: "supprimer_image.php",
+	            async : false,
+	            data: { idImage : idImage },
+	            dataType : "json",
+	            statusCode: {
+	                404: function() {
+	                alert( "La page est introuvable !");
+	                }
+	            },
+	            success: function (data){
+	                if( data.msg != "ok"){
+	                	 console.log(data.msg);
+	               } else {
+						var post = new Array();
+						post["idCategorie"] = ($(this).parent().attr("id").split("categorie-"))[1]; ;
+						locationPost("administration.php", post );
+	               }
+	            }
+	        });
     });
     
 });
@@ -217,3 +261,16 @@ $(document).ready(function(){
 			return true;
 		}
 	};
+	
+	// Fonction de post et location
+	function locationPost(url,post){
+		var content = "";
+		for (var key in post){
+			if (post.hasOwnProperty(key)) {
+				content = content + "<input type='text' name='"+key+"' value='"+post[key]+"'/>";
+		    }
+		}
+		var form = $('<form action="' + url + '" method="post">'+content+'></form>');
+		$('body').append(form);
+		$(form).submit();
+	}

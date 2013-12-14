@@ -1,7 +1,7 @@
 <?php
 $page = array(
         "titre" => "Nicody Galerie - Administration",
-        "script" => array( "js/administration.js")
+        "script" => array( "js/administration.js", "js/jquery.form.js")
         );
 include("include/header.php");
 
@@ -57,7 +57,10 @@ include("include/connexion.php");
 				$stm = $pdo->prepare($sql);
 				$stm->execute(array(":idcategorie" => $categorie["idcategorie"]));
 				while( $image = $stm->fetch(PDO::FETCH_ASSOC) ){
-  					echo "<li class='ui-state-default idImage-".$image["idimage"]."'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>".$image["nom"]."</li>";
+  					echo "<li class='ui-state-default idImage-".$image["idimage"]."'>
+  							<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>".$image["nom"]."
+  							<img id='supprimerImage-".$image["idimage"]."' src='img/croix.png' class='supprimerImage right petite_image curseur'/>
+  						</li>";
 				}
   				echo "</ul>
 			</div>
