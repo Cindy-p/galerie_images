@@ -8,84 +8,86 @@
 					<li>Noël</li>
 					<li>Chats</li>
 				</ul>
-				<div class="noel">
-					<div>
-						<img src="img/utilisateur1/noel/noel1.jpg" alt=""/>
+				<div>
+					<div class="categorie noel">
 						<div>
-							<span>Noël 1</span>
-							<p>Description 1</p>
-							<ul>
-								<li>sapin</li>
-								<li>neige</li>
-								<li>forêt</li>
-							</ul>
+							<img src="img/utilisateur1/noel/noel1.jpg" alt=""/>
+							<div>
+								<span>Noël 1</span>
+								<p>Description 1</p>
+								<ul>
+									<li>sapin</li>
+									<li>neige</li>
+									<li>forêt</li>
+								</ul>
+							</div>
+						</div>
+						<div>
+							<img src="img/utilisateur1/noel/noel2.jpg" alt=""/>
+							<div>
+								<span>Noël 2</span>
+								<p>Description 2</p>
+								<ul>
+									<li>Cadeau</li>
+								</ul>
+							</div>
+						</div>
+						<div>
+							<img src="img/utilisateur1/noel/noel3.jpg" alt=""/>
+							<div>
+								<span>Noël 3</span>
+								<p>Description 3</p>
+								<ul>
+									<li>Maison</li>
+									<li>Décoration</li>
+								</ul>
+							</div>
+						</div>
+						<div>
+							<img src="img/utilisateur1/noel/noel4.jpg" alt=""/>
+							<div>
+								<span>Noël 4</span>
+								<p>Description 4</p>
+								<ul>
+									<li>Boules</li>
+									<li>Décorations</li>
+								</ul>
+							</div>
 						</div>
 					</div>
-					<div>
-						<img src="img/utilisateur1/noel/noel2.jpg" alt=""/>
+					<div class="categorie chats">
 						<div>
-							<span>Noël 2</span>
-							<p>Description 2</p>
-							<ul>
-								<li>Cadeau</li>
-							</ul>
+							<img src="img/utilisateur1/chats/chat1.jpg" alt=""/>
+							<div>
+								<span>Chat 1</span>
+								<p>Description 1</p>
+								<ul>
+									<li>Animaux</li>
+								</ul>
+							</div>
+						</div>
+						<div>
+							<img src="img/utilisateur1/chats/chat2.jpg" alt=""/>
+							<div>
+								<span>Chat 2</span>
+								<p>Description 2</p>
+								<ul>
+									<li>Animaux</li>
+								</ul>
+							</div>
+						</div>
+						<div>
+							<img src="img/utilisateur1/chats/chat3.jpg" alt=""/>
+							<div>
+								<span>Chat 3</span>
+								<p>Description 3</p>
+								<ul>
+									<li>Animaux</li>
+								</ul>
+							</div>
 						</div>
 					</div>
-					<div>
-						<img src="img/utilisateur1/noel/noel3.jpg" alt=""/>
-						<div>
-							<span>Noël 3</span>
-							<p>Description 3</p>
-							<ul>
-								<li>Maison</li>
-								<li>Décoration</li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<img src="img/utilisateur1/noel/noel4.jpg" alt=""/>
-						<div>
-							<span>Noël 4</span>
-							<p>Description 4</p>
-							<ul>
-								<li>Boules</li>
-								<li>Décorations</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="chats">
-					<div>
-						<img src="img/utilisateur1/chats/chat1.jpg" alt=""/>
-						<div>
-							<span>Chat 1</span>
-							<p>Description 1</p>
-							<ul>
-								<li>Animaux</li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<img src="img/utilisateur1/chats/chat2.jpg" alt=""/>
-						<div>
-							<span>Chat 2</span>
-							<p>Description 2</p>
-							<ul>
-								<li>Animaux</li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<img src="img/utilisateur1/chats/chat3.jpg" alt=""/>
-						<div>
-							<span>Chat 3</span>
-							<p>Description 3</p>
-							<ul>
-								<li>Animaux</li>
-							</ul>
-						</div>
-					</div>
-				</div>				
+				</div>			
 			</div>
 		</div>
 <?php
