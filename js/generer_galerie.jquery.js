@@ -34,9 +34,12 @@
 			// On ajoute la catégorie qui affichera toutes les images
 			$("#categories").prepend('<li>Tous</li>');
 
-			$("#galerie .conteneurImage ul").addClass("tags");
 			$("#galerie .conteneurImage span").addClass("titre");
-
+			$(".conteneurImage .titre").css('width', $(".conteneurImage img").width());
+			
+			$("#galerie .conteneurImage ul").addClass("tags");
+			$(".conteneurImage .tags").css('width', $(".conteneurImage img").width());
+			
 			// Affichage des images en fonction des catégories
 			var precedCategorie = $("#categories li").first();
 			precedCategorie.addClass("select");
@@ -64,9 +67,6 @@
 					}
 				});
 			});
-
-			// Création des miniatures
-			$("img").addClass('miniature');
 
 			// Description qui s'affiche au survol de la souris
 			$(".conteneurImage p").addClass("description");
