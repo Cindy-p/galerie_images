@@ -24,6 +24,7 @@
 			divConteneurImage.addClass("conteneurImage");
 
 			$("#galerie>div").attr('id', 'listeImages');
+
 			$("#listeImages>div").css("display", "inline");
 			$("#listeImages>div").addClass("categorie");
 
@@ -104,14 +105,6 @@
 				// Taille de l'image se situant dans la pop-up
 				$("#popup img").css("width", $(window).width()*0.5);
 
-				// En cas de dépassement des images du viewport
-				/*if ($("#popup img").width() > $(window).width()) {
-					$("#popup img").css("width", $(window).width()*0.75);
-					if ($("#popup img").height() > $(window).height()) {
-						$("#popup img").css("height", $(window).height()*0.75);
-					}
-				}*/
-
 				// Lien précédent
 				var divCategorie = img.parent().parent();
 				if ((nomCategorie == "tous" && img.parent().get(0) == $('.conteneurImage').get(0)) ||
@@ -138,7 +131,7 @@
 						img.parent().get(0) != $('.conteneurImage').last().get(0)) {
 					/* Si on se situe dans la catégorie "tous", que l'image est la dernière d'une div catégorie
 					   mais pas la dernière de la catégorie "tous" */
-					var imgSuiv = divCategorie.next().find('.conteneurImage img');
+					var imgSuiv = divCategorie.next().find('.conteneurImage img').first();
 				}
 				else {
 					var imgSuiv = img.parent().next().find("img");
@@ -147,19 +140,17 @@
 				// On associe ces liens aux symboles permettant la navigation
 				if (imgPrec != "") {
 					$("#popup").append('<span id="imgPrec"><img src="img/fleche_precedente.png"/></span>');
-					// $("#imgPrec").css("top", (img.height()/2) - 50 + "px");
+					$("#imgPrec").css("top", ($("#popup").height()/2) - 25 + 'px');
 				}
 					
 				if (imgSuiv != "") {
 					$("#popup").append('<span id="imgSuiv"><img src="img/fleche_suivante.png"/></span>');
+					$("#imgSuiv").css('top', ($("#popup").height()/2) - 25 + 'px');
 				}
 
+				//console.log(img.parent());
 				$("#popup").append('<span class="titre">' + img.parent().find('.titre').text() + '</span>');
 				$("#popup").append('<span class="description">' + img.parent().find('.description').text() + '</span>');
-
-				console.log($("#popup img").width());
-				// console.log($("#imgPrec img").height());
-				// console.log($("#imgSuiv img").height());
 
 				// Passage à l'image précédente ou suivante
 				$("#imgPrec").click(function() {
