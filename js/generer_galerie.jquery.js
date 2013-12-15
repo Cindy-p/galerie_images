@@ -147,12 +147,18 @@
 							$("#popup").append('<span id="imgPrec"><img src="img/fleche_precedente.png"/></span>');
 							$("#imgPrec").css("top", ($("#popup").height()/2) - 25 + 'px');
 							$("#imgPrec").fadeIn('fast');
+							$("#imgPrec").click(function() {
+								popup(imgPrec);
+							});
 						}
 						else if ((positionSourisImgX >= $(this).width()/2) && (imgSuiv != "")) {
 							$("#imgPrec").fadeOut('fast');
 							$("#popup").append('<span id="imgSuiv"><img src="img/fleche_suivante.png"/></span>');
 							$("#imgSuiv").css('top', ($("#popup").height()/2) - 25 + 'px');
 							$("#imgSuiv").fadeIn('fast');
+							$("#imgSuiv").click(function() {
+								popup(imgSuiv);
+							});
 						}
 						else {
 							$("#imgPrec").fadeOut('fast');
@@ -169,18 +175,7 @@
 				$("#popup .titre").css('width', tailleMax);
 				$("#popup .description").css('width', tailleMax);
 
-				
-				// Passage à l'image précédente ou suivante
-				// En cliquant sur les icônes
-				$("#imgPrec").click(function() {
-					popup(imgPrec);
-				});
-				
-				$("#imgSuiv").click(function() {
-					popup(imgSuiv);
-				});
-
-				// En cliquant sur la moitié droite ou gauche de l'image
+				// Passage à l'image précédente ou suivante en cliquant sur la moitié droite ou gauche de l'image
 				$("#popup img").click(function(event) {
 					var positionSourisImgX = event.pageX - $(this).parent().position().left - $(this).position().left;
 					if (positionSourisImgX > 0 && positionSourisImgX < $(this).width()+1) {
