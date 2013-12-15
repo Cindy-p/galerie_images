@@ -105,6 +105,7 @@
 				// Taille de l'image se situant dans la pop-up
 				$("#popup img").css("width", $(window).width()*0.5);
 
+				// Comportement des liens précédent et suivant
 				// Lien précédent
 				var divCategorie = img.parent().parent();
 				if ((nomCategorie == "tous" && img.parent().get(0) == $('.conteneurImage').get(0)) ||
@@ -137,28 +138,59 @@
 					var imgSuiv = img.parent().next().find("img");
 				}
 
-				// On associe ces liens aux symboles permettant la navigation
-				if (imgPrec != "") {
-					$("#popup").append('<span id="imgPrec"><img src="img/fleche_precedente.png"/></span>');
-					$("#imgPrec").css("top", ($("#popup").height()/2) - 25 + 'px');
-				}
-					
-				if (imgSuiv != "") {
-					$("#popup").append('<span id="imgSuiv"><img src="img/fleche_suivante.png"/></span>');
-					$("#imgSuiv").css('top', ($("#popup").height()/2) - 25 + 'px');
-				}
+				// Affichage des images associés aux liens précédent et suivant
+				$("#popup img").mousemove(function(event) {
+					var positionSourisImgX = event.pageX - $(this).parent().position().left - $(this).position().left;
+					if (positionSourisImgX > 0 && positionSourisImgX < $(this).width()+1) {
+						if ((positionSourisImgX < $(this).width()/2) && (imgPrec != "")) {
+							$("#imgSuiv").fadeOut('fast');
+							$("#popup").append('<span id="imgPrec"><img src="img/fleche_precedente.png"/></span>');
+							$("#imgPrec").css("top", ($("#popup").height()/2) - 25 + 'px');
+							$("#imgPrec").fadeIn('fast');
+						}
+						else if ((positionSourisImgX >= $(this).width()/2) && (imgSuiv != "")) {
+							$("#imgPrec").fadeOut('fast');
+							$("#popup").append('<span id="imgSuiv"><img src="img/fleche_suivante.png"/></span>');
+							$("#imgSuiv").css('top', ($("#popup").height()/2) - 25 + 'px');
+							$("#imgSuiv").fadeIn('fast');
+						}
+						else {
+							$("#imgPrec").fadeOut('fast');
+							$("#imgSuiv").fadeOut('fast');
+						}
+					}
+				});
 
-				//console.log(img.parent());
-				$("#popup").append('<span class="titre">' + img.parent().find('.titre').text() + '</span>');
-				$("#popup").append('<span class="description">' + img.parent().find('.description').text() + '</span>');
+				// Affichage du titre et de la description dans la pop-up
+				var tailleMax = $("#popup").width();
+				$("#popup").append('<p class="titre">' + img.parent().find('.titre').text() + '</span>');
+				$("#popup").append('<p class="description">' + img.parent().find('.description').text() + '</span>');
+				// Pour que le titre et la description s'adapte à la taille de la pop-up
+				$("#popup .titre").css('width', tailleMax);
+				$("#popup .description").css('width', tailleMax);
 
+				
 				// Passage à l'image précédente ou suivante
+				// En cliquant sur les icônes
 				$("#imgPrec").click(function() {
 					popup(imgPrec);
 				});
 				
 				$("#imgSuiv").click(function() {
 					popup(imgSuiv);
+				});
+
+				// En cliquant sur la moitié droite ou gauche de l'image
+				$("#popup img").click(function(event) {
+					var positionSourisImgX = event.pageX - $(this).parent().position().left - $(this).position().left;
+					if (positionSourisImgX > 0 && positionSourisImgX < $(this).width()+1) {
+						if ((positionSourisImgX < $(this).width()/2) && (imgPrec != "")) {
+							popup(imgPrec);
+						}
+						else if ((positionSourisImgX >= $(this).width()/2) && (imgSuiv != "")) {
+							popup(imgSuiv);
+						}
+					}
 				});
 
 				// Positionnement de la pop-up dans la page et affichage

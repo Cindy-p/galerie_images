@@ -14,12 +14,17 @@
 						<div>
 							<img src="img/utilisateur1/noel/noel1.jpg" alt=""/>
 							<div>
-								<span>Noël 1</span>
-								<p>Description 1</p>
+								<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+									dignissim sed eros id eleifend. Vestibulum quis ligula eu urna
+									tincidunt sollicitudin.</p>
 								<ul>
 									<li>sapin</li>
 									<li>neige</li>
 									<li>forêt</li>
+									<li>test</li>
+									<li>test</li>
+									<li>test</li>
 								</ul>
 							</div>
 						</div>
