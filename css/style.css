@@ -14,10 +14,21 @@ a {
 	color: #999999;
 }
 
+input {
+	border: 1px solid #bbbbbb;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+/*input:hover, input:active {
+	border: 1px solid #0eb7ba;
+}*/
+
 /* Entête */
 
 #entete {
 	background-color: #ffffff;
+	border-bottom: 1px solid #ececec;
 	width: 100%;
 	height: 100px;
 	vertical-align: middle;
@@ -25,16 +36,18 @@ a {
 
 #nomSite {
 	position: relative;
-	top: 40px;
-	left: 10%;
+	top: 25px;
+	left: 7%;
 	float: left;
-	font-size: 20px;
-	font-weight: bold;
 }
+
+/*#nomSite:hover {
+	background-image: url(img/logo2.png);
+}*/
 
 #navigation {
 	text-align: right;
-	padding: 40px 10% 40px 0;
+	padding: 40px 7% 40px 0;
 	list-style-type: none;
 	margin: 0;
 }
@@ -42,25 +55,49 @@ a {
 #navigation li {
 	display: inline-block;
 	text-align: center;
-	padding-left: 7px;
+	margin-left: 7px;
+}
+
+#navigation .lien {
+	padding: 5px;
+	border-radius: 5px;
+	background-color: #f1f1f1;
+	text-transform: capitalize;
+}
+
+#navigation .lien:hover {
+	background-color: #0eb7ba;
+}
+
+#navigation .lien a {
+	color: #444444;
+}
+
+#navigation .lien:hover a {
+	color: #ffffff;
 }
 
 #navigation li input {
-	padding: 2px;
+	padding: 5px;
 }
 
 #logout {
-    width: 17px;
+    width: 22px;
+    vertical-align: middle;
+}
+
+li #recherche {
+	margin-left: 30px;
 }
 
 /* Corps (Affichage galerie) */
 #corps {
-	padding: 40px 10% 40px 10%;
+	padding: 40px 7% 40px 7%;
 }
 
 #galerie {
 	margin: auto;
-	width: 90%;
+	width: 93%;
 	text-align: center;
 }
 

@@ -21,8 +21,8 @@
 		?>
 		
 		<!--[if lte IE 7]>
-<link rel="stylesheet" type="text/css" href="css/style_ie.css"/>
-<![endif]-->
+			<link rel="stylesheet" type="text/css" href="css/style_ie.css"/>
+		<![endif]-->
 		
 		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.js"></script>
@@ -42,16 +42,18 @@
 	<body>
 	    <div id="entete">
 			<div id="nomSite">
-				<a href="index.php" >Nicody Galerie</a>
+				<a href="index.php" >
+					<img src="img/logo1.png" alt=""/>
+				</a>
 			</div>
 			<ul id="navigation" class="menu_deroulant">
-				<li>
+				<li class="lien">
 					<a href="index.php">Accueil</a>
 				</li>
 				<?php
 				    if (!isset($page["no_redirect"]) ){
 				?>
-				<li>
+				<li class="lien">
 					<a href="administration.php"><?php echo $_SESSION["utilisateur"]; ?></a>
 					<!--<ul id="menuAdministration">
 						<li><a href="#">Gestion Utilisateur</a></li>
@@ -59,13 +61,16 @@
 						<li><a href="logout.php">Déconnexion</a></li>
 					</ul>-->
 				</li>
+				<li class="lien">
+					<a href="include/logout.php" >
+						Déconnexion
+						<!-- <img id="logout" src="img/logout.png"/> -->
+					</a>
+				</li>
 				<li>
 					<form action="" id="recherche">
 						<input type="text" placeholder="Recherche..."/>
 					</form>
-				</li>
-				<li>
-					<a href="include/logout.php" ><img id="logout" src="img/logout.png"/></a>
 				</li>
 				<?php
                     }
