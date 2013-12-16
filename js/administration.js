@@ -52,10 +52,10 @@ $(document).ready(function(){
     $(".editCategorie").on("click", function(){
     	
     	var idCategorie = ($(this).attr("id").split("editCategorie-"))[1];
+    	var bouton = $(this);
     	
     	// Sauvegarde du nouveau nom
     	if ( $(this).hasClass("encours")){
-    		
     		var nomCategorie = $("#nomCategorie-"+idCategorie).val();
     		$.ajax({
 	            type: "POST",
@@ -69,13 +69,14 @@ $(document).ready(function(){
 	                }
 	            },
 	            success: function (data){
-	            	console.log(data.msg);
 	                if( data.msg != "ok"){
 	                	 console.log(data);
 	               } else {
 	            	   $("#nomCategorie-"+idCategorie).replaceWith("<span id='nomCategorie-"+idCategorie+"'>"+nomCategorie+"</span>");
 	            	   $(".categorie-"+idCategorie).html(nomCategorie);
-	            	   $(this).removeClass("encours");
+	            	   console.log(bouton.attr("class"));
+	            	  bouton.removeClass("encours");
+	            	   console.log(bouton.attr("class"));
 	               }
 	            }
 	        });
@@ -85,7 +86,6 @@ $(document).ready(function(){
     	
 	    	$(this).addClass("encours");
 	    	var nom = $("#nomCategorie-"+idCategorie).html();
-	    	
 	    	$("#nomCategorie-"+idCategorie).replaceWith("<input id='nomCategorie-"+idCategorie+"' type='text' value='"+nom+"'/>");
 	    	
     	}
@@ -242,7 +242,6 @@ $(document).ready(function(){
     $(".supprimerImage").on("click",function(){
     	var idCategorie = ($(this).parent().parent().parent().attr("id").split("categorie-"))[1];
 		var idImage = ($(this).attr("id").split("supprimerImage-"))[1];
-		console.log(idImage);
 		$.ajax({
             type: "POST",
             url: "supprimer_image.php",
@@ -255,16 +254,13 @@ $(document).ready(function(){
                 }
             },
             success: function (data){
-            	// Problème de unlink incompréhensible
-              
-            /*  if( data.msg != "ok"){
+              if( data.msg != "ok"){
                 	 console.log(data.msg);
-               } else {*/
-            	 	console.log(data.msg);
+               } else {
 					var post = new Array();
 					post["idCategorie"] = idCategorie;
 					locationPost("administration.php", post );
-               //}
+               }
             }
         });
     });

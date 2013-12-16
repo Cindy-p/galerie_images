@@ -16,6 +16,14 @@
 		$stm->execute(array(":idimage" => $idImage ));
 		$rowImage = $stm->fetch(PDO::FETCH_ASSOC);
 		$nomImage = $rowImage["lien"];
+		$idCategorie = $rowImage["idcategorie"];
+		
+		// Récuperation du nom de dossier
+		$sql = "SELECT * FROM categorie WHERE idcategorie = :idcategorie" ;
+		$stm = $pdo->prepare($sql);
+		$stm->execute(array(":idcategorie" => $idCategorie ));
+		$rowImage = $stm->fetch(PDO::FETCH_ASSOC);
+		$nomCategorie = format_dossier($rowImage["nom"]);
 		
 		// Suppresion de l'image en base 
 		$sql = "DELETE FROM image WHERE idimage = :idimage" ;
@@ -26,7 +34,8 @@
 		$pdo->commit();
 	
 		// Suppresion de l'image en vrai
-		$supprimerImage = dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomImage;
+		$supprimerImage = dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie."/".$nomImage;
+		
 		if ( !unlink($supprimerImage)){
 			$msg = "L'image ne s'est pas supprimée !".$supprimerImage;
 		} else {
