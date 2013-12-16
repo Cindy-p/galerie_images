@@ -59,9 +59,10 @@
 							$fichierFinal = $fichier."(".$nb.").".$extension;
 						}
 					}
+					$fichierFinal = iconv('UTF-8', 'CP1252', $fichierFinal); // Encodage pour le fichier
 					// Vérification de l'intégration de l'image dans notre système de fichier
 					if ( move_uploaded_file($_FILES["file"]["tmp_name"],dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".format_dossier($rowCategorie['nom'])."/".$fichierFinal)){
-					
+						$fichierFinal = iconv('CP1252','UTF-8', $fichierFinal); // Retour encodage pour la base
 						$sql = "INSERT INTO image (nom,description,lien,idCategorie) VALUES (:nom,:description,:lien,:idCategorie)";
 						$stm = $pdo->prepare($sql);
 						$stm->execute(array(":nom" => $nom, ":description" => $description, ":lien" => $fichierFinal, "idCategorie" => $idCategorie));

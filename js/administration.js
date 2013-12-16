@@ -187,8 +187,8 @@ $(document).ready(function(){
     
  // Modificaton d'une image
     $(".editImage").on("click", function(){
-    	var idCategorie = ($(this).parent().parent().attr("id").split("categorie-"))[1];
-    	var idImage = ($(this).attr("id").split("idImage-"))[1];
+    	var idCategorie = ($(this).parent().parent().parent().attr("id").split("categorie-"))[1];
+    	var idImage = ($(this).parent().attr("id").split("idImage-"))[1];
     	var url = "formImage.php?idCategorie="+idCategorie+"&idImage="+idImage;
     	
     	// Chargement du formulaire

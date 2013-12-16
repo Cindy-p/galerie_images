@@ -32,7 +32,7 @@
 					$stmCategorie = $pdo->prepare($sql);
 					$stmCategorie->execute(array(":idutilisateur" => $_SESSION["idutilisateur"]));
 					while( $categorie = $stmCategorie->fetch(PDO::FETCH_ASSOC) ){
-						echo "<div class='".$categorie['nom']."'>";
+						echo "<div class='".strtolower(format_dossier($categorie['nom']))."'>";
 
 						// Récupération des images
 						$sql = "SELECT * FROM image WHERE idcategorie = :idcategorie";
@@ -48,9 +48,6 @@
 												<li>sapin</li>
 												<li>neige</li>
 												<li>forêt</li>
-												<li>test</li>
-												<li>test</li>
-												<li>test</li>
 											</ul>
 										</div>
 									</div>";
