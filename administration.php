@@ -36,18 +36,18 @@ include("include/connexion.php");
 	</div>
 	<?php 
 		// Récupération des catégories
-		$sql = "SELECT idutilisateur, c.idcategorie AS idcategorie, c.nom AS nomCategorie, idimage, description, lien FROM categorie as c LEFT JOIN image as i ON c.idcategorie = i.idcategorie WHERE c.idutilisateur = :idutilisateur";
+		$sql = "SELECT * FROM categorie WHERE idutilisateur = :idutilisateur";
 		$stmCategorie = $pdo->prepare($sql);
 		$stmCategorie->execute(array(":idutilisateur" => $_SESSION["idutilisateur"]));
 		while( $categorie = $stmCategorie->fetch(PDO::FETCH_ASSOC) ){
 			echo "
 			<div id='categorie-".$categorie["idcategorie"]."'>
-				<h2><span id='nomCategorie-".$categorie["idcategorie"]."'>".$categorie["nomCategorie"]."</span>
+				<h2><span id='nomCategorie-".$categorie["idcategorie"]."'>".$categorie["nom"]."</span>
 					<img id='supprimerCategorie-".$categorie["idcategorie"]."' src='img/croix.png' class='supprimerCategorie right petite_image curseur'/>
 					<img id='editCategorie-".$categorie["idcategorie"]."' src='img/vert.png' class='editCategorie center petite_image curseur'/>
 				</h2>
 				<div id='formImage'></div>
-					<button id='nouvelleImage' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>Nouvelle Image</button>
+					<button class='nouvelleImage ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>Nouvelle Image</button>
 					<ul class='listImage'>
 				";
 					// Récupération des images

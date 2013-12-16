@@ -138,7 +138,7 @@ $(document).ready(function(){
     
     
     // Création d'une nouvelle image
-    $("#nouvelleImage").on("click", function(){
+    $(".nouvelleImage").on("click", function(){
     	var idCategorie = ($(this).parent().attr("id").split("categorie-"))[1];
     	var url = "formImage.php?idCategorie="+idCategorie;
     	
@@ -147,7 +147,7 @@ $(document).ready(function(){
     	
     	// Création de la dialog
 		$("#formImage").dialog({
-			autoOpen: false,
+			autoOpen: true,
 			height: 350,
 			width: 350,
 			modal: true,
@@ -181,9 +181,6 @@ $(document).ready(function(){
 				allFields.val("").removeClass("ui-state-error");
 			}
 		});
-		
-		// Lancement de la dialog
-		$("#formImage").dialog("open");
 		
     });
     
