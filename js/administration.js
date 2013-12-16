@@ -159,6 +159,7 @@ $(document).ready(function(){
 			
 						$("#formulaireImage").ajaxSubmit({
 							success: function(data) {
+								console.log(data);
 								var data = $.parseJSON(data);
 								if( data.msg != "ok"){
 									console.log(data);

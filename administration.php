@@ -24,7 +24,7 @@ include("include/connexion.php");
 			$stm = $pdo->prepare($sql);
 			$stm->execute(array(":idutilisateur" => $_SESSION['idutilisateur']));
 			while( $categorie = $stm->fetch(PDO::FETCH_ASSOC) ){
-				echo "<li><a href='#categorie-".$categorie["idcategorie"]."' class='categorie-".$categorie["idcategorie"]."'>".$categorie["nom"]."</a></li>";
+				echo "<li class='curseur'><a href='#categorie-".$categorie["idcategorie"]."' class='categorie-".$categorie["idcategorie"]."'>".$categorie["nom"]."</a></li>";
 			}
 		?>
 	</ul>
