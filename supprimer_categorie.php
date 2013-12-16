@@ -6,12 +6,19 @@
 	
 	$idCategorie = intval(htmlspecialchars($_POST["idCategorie"]));
 	$nomCategorie = htmlspecialchars($_POST["nomCategorie"]);
-	
-	$sql = "DELETE FROM categorie WHERE idcategorie = :idcategorie" ;
+
 	try
 	{
 		// Début de la transaction
 		$pdo->beginTransaction();
+		
+		// Suppression de toutes les images de la catégorie
+		$sql = "DELETE FROM image WHERE idcategorie = :idcategorie" ;
+		$stm = $pdo->prepare($sql);
+		$stm->execute(array(":idcategorie" => $idCategorie ));
+		
+		// Suppression de le catégorie
+		$sql = "DELETE FROM categorie WHERE idcategorie = :idcategorie" ;
 		$stm = $pdo->prepare($sql);
 		$stm->execute(array(":idcategorie" => $idCategorie ));
 	
@@ -20,7 +27,7 @@
 	
 		// Formatage du nom de dossier
     	$nomCategorie = format_dossier($nomCategorie);
-		if ( !rmdir(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie)){
+		if ( !clearDir(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$nomCategorie)){
 			$msg = "Le dossier ne s'est pas supprimé !";
 		} else {
 			$msg = "ok";
