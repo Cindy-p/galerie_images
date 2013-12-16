@@ -48,7 +48,6 @@ include("include/connexion.php");
 				</h2>
 				<div id='formImage'></div>
 					<button id='nouvelleImage' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>Nouvelle Image</button>
-					<br/><br/>
 					<ul class='listImage'>
 				";
 					// Récupération des images
