@@ -204,6 +204,10 @@
 	vertical-align: middle;
 	text-align: center;
 	overflow: visible; /* removes extra width in IE */
+	border: 1px solid #444444;
+	background-color: #444444;
+	color: #ffffff;
+	padding: 5px;
 }
 .ui-button,
 .ui-button:link,
@@ -790,7 +794,7 @@ body .ui-tooltip {
 ----------------------------------*/
 .ui-widget {
 	font-family: Arial;
-	font-size: 1.1em;
+	/*font-size: 1.1em;*/
 }
 .ui-widget .ui-widget {
 	font-size: 1em;
@@ -829,9 +833,7 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
 	border: 1px solid #444444;
-	/*background: #d7ebf9 url(images/ui-bg_glass_80_d7ebf9_1x400.png) 50% 50% repeat-x;*/
 	background-color: #444444;
-	/*font-weight: bold;*/
 	color: #ffffff;
 	padding: 5px;
 }
@@ -860,17 +862,18 @@ body .ui-tooltip {
 	color: #ffffff;
 	text-decoration: none;
 }
-/*.ui-state-active,
+.ui-state-active,
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
-	border: 1px solid #0fb7ba;
+	border: 1px solid #ececec;
+	background: #ffffff;
 	font-weight: bold;
-	color: #ffffff;
-}*/
+	color: #444444;
+}
 .ui-state-active a,
 .ui-state-active a:link,
 .ui-state-active a:visited {
-	color: #ffffff;
+	color: #444444;
 	text-decoration: none;
 }
 

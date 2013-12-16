@@ -104,6 +104,7 @@ li #recherche {
 #categories {
 	list-style-type: none;
 	margin-bottom: 40px;
+	padding-left: 0;
 }
 
 #categories li {
