@@ -245,3 +245,14 @@ li #recherche {
 	top: -7px;
 	right: 5px;
 }
+
+/* Partie administration */
+
+#listCategorie {
+	margin: auto;
+	text-align: center;
+}
+
+#listCategorie div {
+	text-align: left;
+}

@@ -773,7 +773,7 @@ button.ui-button::-moz-focus-inner {
 .ui-tabs .ui-tabs-panel {
 	display: block;
 	/*border-width: 0;*/
-	padding: 1em 1.4em;
+	padding: 1em 1.3em;
 	background: #ffffff;
 	border: 1px solid #ececec;
 	margin-left: -5px;
@@ -866,6 +866,7 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
 	border: 1px solid #ececec;
+	border-right: 1px solid #ffffff;
 	background: #ffffff;
 	font-weight: bold;
 	color: #444444;
