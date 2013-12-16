@@ -773,7 +773,7 @@ button.ui-button::-moz-focus-inner {
 .ui-tabs .ui-tabs-panel {
 	display: block;
 	/*border-width: 0;*/
-	padding: 1em 1.3em;
+	padding: 1em 1.35em;
 	background: #ffffff;
 	border: 1px solid #ececec;
 	margin-left: -5px;
