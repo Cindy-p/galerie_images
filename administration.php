@@ -56,7 +56,7 @@ include("include/connexion.php");
 						$stmImage->execute(array(":idcategorie" => $categorie["idcategorie"]));
 						while( $image = $stmImage->fetch(PDO::FETCH_ASSOC) ){
 		  					echo "<li id='idImage-".$image["idimage"]."' class='ui-state-default'>
-		  							<span class='ui-icon ui-icon-arrowthick-2-n-s'></span><span class='editImage'>".$image["nom"]."</span>
+		  							<span class='editImage'>".$image["nom"]."</span>
 		  							<img id='supprimerImage-".$image["idimage"]."' src='img/croix.png' class='supprimerImage right petite_image curseur'/>
 		  						</li>";
 						}

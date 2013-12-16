@@ -13,6 +13,9 @@
 				<br/>
 				<label for='description'>Description</label>
 				<textarea rows='3' cols='30' name='description' id='description' class='text ui-widget-content ui-corner-all' ></textarea>
+				<br/>
+				<label for='tags'>Tags</label>
+				<input type='text' name='tags' id='tags' class='text ui-widget-content ui-corner-all'/>
 				<input type='file' name='file' id='file'/>
 				<input type='hidden' name='formIdCategorie' id='formIdCategorie' value='".$_GET["idCategorie"]."'/>
 			</fieldset>
