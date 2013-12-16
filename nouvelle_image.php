@@ -45,7 +45,7 @@
 					$nb = 1;
 					$fichier = "";
 					$fichierFinal = $_FILES["file"]["name"];
-					if (file_exists(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$rowCategorie['nom']."/".$_FILES["file"]["name"]))
+					if (file_exists(dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".format_dossier($rowCategorie['nom'])."/".$_FILES["file"]["name"]))
 					{
 						$temp = explode(".", $_FILES["file"]["name"]);
 						$nbPart = count($temp);
@@ -60,7 +60,7 @@
 						}
 					}
 					// Vérification de l'intégration de l'image dans notre système de fichier
-					if ( move_uploaded_file($_FILES["file"]["tmp_name"],dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".$rowCategorie['nom']."/".$fichierFinal)){
+					if ( move_uploaded_file($_FILES["file"]["tmp_name"],dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".format_dossier($rowCategorie['nom'])."/".$fichierFinal)){
 					
 						$sql = "INSERT INTO image (nom,description,lien,idCategorie) VALUES (:nom,:description,:lien,:idCategorie)";
 						$stm = $pdo->prepare($sql);
