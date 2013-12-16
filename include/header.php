@@ -68,9 +68,7 @@
 					</a>
 				</li>
 				<li>
-					<form action="" id="recherche">
-						<input type="text" placeholder="Recherche..."/>
-					</form>
+					<input id="recherche" type="text" placeholder="Recherche..."/>
 				</li>
 				<?php
                     }
