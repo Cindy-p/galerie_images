@@ -236,3 +236,10 @@ li #recherche {
 #popup .description {
 	margin: 0;
 }
+
+#popup .fermer {
+	position: absolute;
+	width: 20px;
+	top: -7px;
+	right: 5px;
+}

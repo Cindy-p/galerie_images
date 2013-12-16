@@ -4,8 +4,7 @@
 		return this.each(function() {
 			function precharger(listeImages) {
 			    $(listeImages).each(function() {
-					$('<img/>')[0].src = this;
-					/*console.log($('<img/>')[0].src);*/
+					(new Image()).src = this;
 			    });
 			}
 
@@ -104,6 +103,8 @@
 				
 				// Taille de l'image se situant dans la pop-up
 				$("#popup img").css("width", $(window).width()*0.5);
+
+				// $("#popup").append('<p class="fermer"><img src="img/croix1.png"/></p>');
 
 				// Comportement des liens précédent et suivant
 				// Lien précédent
