@@ -7,7 +7,6 @@
 	$idCategorie = intval(htmlspecialchars($_POST["idCategorie"]));
 	$nomCategorie = htmlspecialchars($_POST["nomCategorie"]);
 	
-	
 	try
 	{
 		// Début de la transaction

@@ -59,11 +59,11 @@
 
 				// Récupération des images
 				if ( isset($_POST["recherche"])) {
-					$sql = "SELECT * FROM image WHERE idcategorie = :idcategorie AND ( nom LIKE :recherche OR description LIKE :recherche OR lien LIKE :recherche)" ;
+					$sql = "SELECT i.nom AS nom, i.description AS description, i.idimage AS idimage, i.lien AS lien FROM image as i LEFT JOIN tag AS t ON i.idimage = t.idimage WHERE idcategorie = :idcategorie AND ( nom LIKE :recherche OR description LIKE :recherche OR lien LIKE :recherche OR t.libelle LIKE :recherche) GROUP BY idimage ORDER BY ordre ASC" ;
 					$stmImage = $pdo->prepare($sql);
 					$stmImage->execute(array(":idcategorie" => $categorie["idcategorie"], ":recherche" => "%".$_POST["recherche"]."%" ));
 				} else {
-					$sql = "SELECT * FROM image WHERE idcategorie = :idcategorie";
+					$sql = "SELECT * FROM image WHERE idcategorie = :idcategorie ORDER BY ordre ASC";
 					$stmImage = $pdo->prepare($sql);
 					$stmImage->execute(array(":idcategorie" => $categorie["idcategorie"]));
 				}
@@ -72,13 +72,22 @@
 								<img src='utilisateurs/".$_SESSION['utilisateur']."/".format_dossier($categorie['nom'])."/".$image['lien']."' alt=''/>
 								<div>
 									<span>".$image['nom']."</span>
-									<p>".$image['description']."</p>
-									<ul>
-										<li>sapin</li>
-										<li>neige</li>
-										<li>forêt</li>
-									</ul>
-								</div>
+									<p>".$image['description']."</p>";
+					
+									// Récupération des tags
+									$sql = "SELECT * FROM tag WHERE idimage = :idimage ";
+									$stmTag = $pdo->prepare($sql);
+									$stmTag->execute(array(":idimage" => $image['idimage']));
+									
+									if ( $stmTag->rowCount() > 0 ){
+										echo "<ul>";
+										while( $tag = $stmTag->fetch(PDO::FETCH_ASSOC) ){
+											echo "<li>".$tag["libelle"]."</li>";
+										}
+										echo "</ul>";
+									}
+					
+					echo "		</div>
 							</div>";
 				}
 				echo "</div>";

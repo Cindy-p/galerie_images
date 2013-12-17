@@ -25,7 +25,12 @@
 		$rowImage = $stm->fetch(PDO::FETCH_ASSOC);
 		$nomCategorie = format_dossier($rowImage["nom"]);
 		
-		// Suppresion de l'image en base 
+		// Suppression des tags de l'image en base 
+		$sql = "DELETE FROM tag WHERE idimage = :idimage" ;
+		$stm = $pdo->prepare($sql);
+		$stm->execute(array(":idimage" => $idImage ));
+		
+		// Suppression de l'image en base 
 		$sql = "DELETE FROM image WHERE idimage = :idimage" ;
 		$stm = $pdo->prepare($sql);
 		$stm->execute(array(":idimage" => $idImage ));

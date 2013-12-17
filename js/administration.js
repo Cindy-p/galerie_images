@@ -37,7 +37,6 @@ $(document).ready(function(){
 	                }
 	            },
 	            success: function (data){
-	            	console.log(data.msg);
 	                if( data.msg != "ok"){
 	                	 console.log(data);
 	               } else {
@@ -75,7 +74,7 @@ $(document).ready(function(){
 	            	   $("#nomCategorie-"+idCategorie).replaceWith("<span id='nomCategorie-"+idCategorie+"'>"+nomCategorie+"</span>");
 	            	   $(".categorie-"+idCategorie).html(nomCategorie);
 	            	   console.log(bouton.attr("class"));
-	            	  bouton.removeClass("encours");
+	            	   bouton.removeClass("encours");
 	            	   console.log(bouton.attr("class"));
 	               }
 	            }
@@ -111,7 +110,6 @@ $(document).ready(function(){
 	                }
 	            },
 	            success: function (data){
-	            	console.log(data.msg);
 	                if( data.msg != "ok"){
 	                	 console.log(data);
 	               } else {
@@ -132,9 +130,36 @@ $(document).ready(function(){
 
  /***************************************Images**************************************/
     
-    // La liste d'image
-    $( ".listImage" ).sortable();
-    $( ".listImage" ).disableSelection();
+    // La liste d'image et la sauvegarde de l'ordre
+    $( ".listImage" ).sortable( {
+    		connectWith: ".listImage",
+    	    stop: function (event, ui) {
+    			var listImage = [];
+    			$(".listImage > li").each(function(){
+    				listImage.push(($(this).attr("id").split("idImage-"))[1]);
+    			});
+    			
+    			$.ajax({
+    	            type: "GET",
+    	            url: "modification_ordre.php",
+    	            async : true,
+    	            data: { listImage : listImage },
+    	            dataType : "json",
+    	            statusCode: {
+    	                404: function() {
+    	                alert( "La page est introuvable !");
+    	                }
+    	            },
+    	            success: function (data){
+    	            	console.log(data.msg);
+    	            	if( data.msg != "ok"){
+    	            		console.log(data.msg);
+    	            	}
+    	            }
+    	        });
+    			
+    		}
+    }).disableSelection();
     
     
     // Création d'une nouvelle image
@@ -159,7 +184,6 @@ $(document).ready(function(){
 			
 						$("#formulaireImage").ajaxSubmit({
 							success: function(data) {
-								console.log(data);
 								var data = $.parseJSON(data);
 								if( data.msg != "ok"){
 									console.log(data);

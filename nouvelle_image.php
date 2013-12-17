@@ -24,6 +24,7 @@
 			// Récupération des données
 			$nom = $_POST["nom"];
 			$description = htmlspecialchars($_POST["description"]);
+			$tags = htmlspecialchars($_POST["tags"]);
 			$idCategorie = $_POST["formIdCategorie"];
 			$pattern_nom = '/^[a-zA-Z0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]*$/';
 			$nom = htmlspecialchars($nom);
@@ -59,18 +60,45 @@
 							$fichierFinal = $fichier."(".$nb.").".$extension;
 						}
 					}
+					
 					$fichierFinal = iconv('UTF-8', 'CP1252', $fichierFinal); // Encodage pour le fichier
+					$cheminTotal = dirname(__FILE__).'/utilisateurs/'.$_SESSION["utilisateur"].'/'.format_dossier($rowCategorie["nom"]).'/'.$fichierFinal;
 					// Vérification de l'intégration de l'image dans notre système de fichier
-					if ( move_uploaded_file($_FILES["file"]["tmp_name"],dirname(__FILE__)."/utilisateurs/".$_SESSION['utilisateur']."/".format_dossier($rowCategorie['nom'])."/".$fichierFinal)){
+					if ( move_uploaded_file($_FILES["file"]["tmp_name"],$cheminTotal)){
+						// Création de l'image dans la base
 						$fichierFinal = iconv('CP1252','UTF-8', $fichierFinal); // Retour encodage pour la base
-						$sql = "INSERT INTO image (nom,description,lien,idCategorie) VALUES (:nom,:description,:lien,:idCategorie)";
-						$stm = $pdo->prepare($sql);
-						$stm->execute(array(":nom" => $nom, ":description" => $description, ":lien" => $fichierFinal, "idCategorie" => $idCategorie));
 						
-						// Validation de la transaction
+						// Récupérer l'image précédente pour avoir l'ordre de l'image
+						$sql = "SELECT * FROM image WHERE idcategorie = :idCategorie ORDER BY ordre DESC";
+						$stm = $pdo->prepare($sql);
+						$stm->execute(array("idCategorie" => $idCategorie));
+						$rowImage = $stm->fetch(PDO::FETCH_ASSOC);
+
+						if ( $rowImage["ordre"] == ""){
+							$ordre = 1;
+						} else {
+							$ordre = intval($rowImage["ordre"])+1;
+						}
+						
+						$sql = "INSERT INTO image (nom,description,lien,ordre,idcategorie) VALUES (:nom,:description,:lien,:ordre,:idCategorie)";
+						$stm = $pdo->prepare($sql);
+						$stm->execute(array(":nom" => $nom, ":description" => $description, ":lien" => $fichierFinal, ":ordre" => $ordre, "idCategorie" => $idCategorie));
+						
+						// Insertion des tags dans la base
+						$listTags = explode(" ", $tags);
+						$idImage = $pdo->lastInsertId();
+						for($i = 0; $i < count($listTags); ++$i){
+							if ( $listTags[$i] != " "){
+								$sql = "INSERT INTO tag (libelle,idimage) VALUES (:libelle,:idimage)";
+								$stm = $pdo->prepare($sql);
+								$stm->execute(array(":libelle" => $listTags[$i], ":idimage" => $idImage));
+							}
+						}
+						
+						// Validation de la dernière transaction
 						$pdo->commit();
 					
-						$msg = "ok";
+						$msg .= "ok";
 						
 					} else {
 						 $msg = "L'image n'est pas enregistrée !";

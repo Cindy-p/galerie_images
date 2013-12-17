@@ -29,6 +29,14 @@
 		$stm->execute(array(":idimage" => $_GET["idImage"]));
 		$rowImage = $stm->fetch(PDO::FETCH_ASSOC);
 		
+		$sql = "SELECT libelle FROM tag WHERE idimage = :idimage";
+		$stm = $pdo->prepare($sql);
+		$stm->execute(array(":idimage" => $_GET["idImage"]));
+		$libelle = "";
+		while ( $rowTags = $stm->fetch(PDO::FETCH_ASSOC)){
+			$libelle .= $rowTags["libelle"]." ";
+		}
+		
 		echo "
 		<p id='textNouveau'  class='validateTips'>Tous les champs sont requis !</p>
 		<form id='formulaireImage' method='POST' action='modification_image.php' enctype='multipart/form-data'>
@@ -38,6 +46,9 @@
 				<br/>
 				<label for='description'>Description</label>
 				<textarea rows='3' cols='30' name='description' id='description' class='text ui-widget-content ui-corner-all' >".$rowImage["description"]."</textarea>
+				<br/>
+				<label for='tags'>Tags</label>
+				<input type='text' name='tags' id='tags' value='".$libelle."' class='text ui-widget-content ui-corner-all'/>
 				<input type='hidden' name='formIdCategorie' id='formIdCategorie' value='".$rowImage["idcategorie"]."'/>
 				<input type='hidden' name='formIdImage' id='formIdImage' value='".$rowImage["idimage"]."'/>
 			</fieldset>

@@ -12,6 +12,17 @@
 		// Début de la transaction
 		$pdo->beginTransaction();
 		
+		// Recherche de l'idimage 
+		$sql = "SELECT * FROM image WHERE idcategorie = :idcategorie" ;
+		$stm = $pdo->prepare($sql);
+		$stm->execute(array(":idcategorie" => $idCategorie ));
+		while ( $rowImage = $stm->fetch(PDO::FETCH_ASSOC)){
+			// Suppression de tous les tags des l'image de la catégorie 
+			$sql = "DELETE FROM tag WHERE idimage = :idimage" ;
+			$stm = $pdo->prepare($sql);
+			$stm->execute(array(":idimage" => $rowImage["idimage"] ));
+		}
+		
 		// Suppression de toutes les images de la catégorie
 		$sql = "DELETE FROM image WHERE idcategorie = :idcategorie" ;
 		$stm = $pdo->prepare($sql);

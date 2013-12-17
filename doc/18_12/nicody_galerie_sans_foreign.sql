@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Dim 08 Décembre 2013 à 23:54
+-- Généré le: Mar 17 Décembre 2013 à 23:13
 -- Version du serveur: 5.5.34
 -- Version de PHP: 5.4.22
 
@@ -30,8 +30,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `idcategorie` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(30) DEFAULT NULL,
   `idutilisateur` int(11) NOT NULL,
-  PRIMARY KEY (`idcategorie`,`idutilisateur`),
-  KEY `fk_categorie_utilisateur` (`idutilisateur`)
+  PRIMARY KEY (`idcategorie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -45,9 +44,9 @@ CREATE TABLE IF NOT EXISTS `image` (
   `nom` varchar(50) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `lien` varchar(255) DEFAULT NULL,
+  `ordre` int(3) NOT NULL,
   `idcategorie` int(11) NOT NULL,
-  PRIMARY KEY (`idimage`,`idcategorie`),
-  KEY `fk_image_categorie1` (`idcategorie`)
+  PRIMARY KEY (`idimage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -58,10 +57,9 @@ CREATE TABLE IF NOT EXISTS `image` (
 
 CREATE TABLE IF NOT EXISTS `tag` (
   `idtag` int(11) NOT NULL AUTO_INCREMENT,
-  `libelle` int(11) DEFAULT NULL,
+  `libelle` varchar(30) DEFAULT NULL,
   `idimage` int(11) NOT NULL,
-  PRIMARY KEY (`idtag`,`idimage`),
-  KEY `fk_Tag_image1` (`idimage`)
+  PRIMARY KEY (`idtag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -86,28 +84,6 @@ INSERT INTO `utilisateur` (`idutilisateur`, `login`, `password`, `email`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@nicody.fr'),
 (2, 'nicolas', '830d1ab1b2aeeb959613c80ff2c95d9a', 'nicolas.varnier@etu.univ-lyon1.fr'),
 (3, 'cindy', '6ed61d4b80bb0f81937b32418e98adca', 'cindy.perat@etu.univ-lyon1.fr');
-
---
--- Contraintes pour les tables exportées
---
-
---
--- Contraintes pour la table `categorie`
---
-ALTER TABLE `categorie`
-  ADD CONSTRAINT `fk_categorie_utilisateur` FOREIGN KEY (`idutilisateur`) REFERENCES `utilisateur` (`idutilisateur`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Contraintes pour la table `image`
---
-ALTER TABLE `image`
-  ADD CONSTRAINT `fk_image_categorie1` FOREIGN KEY (`idcategorie`) REFERENCES `categorie` (`idcategorie`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Contraintes pour la table `tag`
---
-ALTER TABLE `tag`
-  ADD CONSTRAINT `fk_Tag_image1` FOREIGN KEY (`idimage`) REFERENCES `image` (`idimage`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

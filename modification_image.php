@@ -9,6 +9,7 @@
 	$description = htmlspecialchars($_POST["description"]);
 	$idCategorie = $_POST["formIdCategorie"];
 	$idImage = $_POST["formIdImage"];
+	$tags = htmlspecialchars($_POST["tags"]);
 	$pattern_nom = '/^[a-zA-Z0-9 áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]*$/';
 	$nom = htmlspecialchars($nom);
 
@@ -19,6 +20,35 @@
 		{
 			// Début de la transaction
 			$pdo->beginTransaction();
+			
+			// Comparaison des tags avec la base
+			$listTags = explode(" ", $tags);
+			
+			$sql = "SELECT * FROM tag WHERE idimage = :idimage";
+			$stm = $pdo->prepare($sql);
+			$stm->execute(array("idimage" => $idImage));
+			while ($rowTag = $stm->fetch(PDO::FETCH_ASSOC)){
+				// Vérification de l'éxistance du tags dans la liste
+				if ( in_array($rowTag["libelle"], $listTags) ){
+					$nb = array_search($rowTag["libelle"], $listTags);
+					array_splice($listTags, $nb,$nb+1);
+				// Suppression de l'ancien tag
+				} else {
+					$sql = "DELETE FROM tag WHERE idtag = :idtag";
+					$stm = $pdo->prepare($sql);
+					$stm->execute(array("idtag" => $rowTag["idtag"]));
+				}
+			}
+			
+			// Création des nouveaux tags
+			for($i = 0; $i < count($listTags); ++$i){
+				if ( $listTags[$i] != " "){
+					$sql = "INSERT INTO tag (libelle,idimage) VALUES (:libelle,:idimage)";
+					$stm = $pdo->prepare($sql);
+					$stm->execute(array(":libelle" => $listTags[$i], ":idimage" => $idImage));
+				}
+			}
+			
 			
 			// Récupération des informations sur l'image
 			$sql = "SELECT * FROM image WHERE idimage = :idimage";

@@ -51,7 +51,7 @@ include("include/connexion.php");
 						<ul class='listImage'>
 					";
 						// Récupération des images
-						$sql = "SELECT idimage, nom FROM image WHERE idcategorie = :idcategorie";
+						$sql = "SELECT idimage, nom FROM image WHERE idcategorie = :idcategorie ORDER BY ordre ASC";
 						$stmImage = $pdo->prepare($sql);
 						$stmImage->execute(array(":idcategorie" => $categorie["idcategorie"]));
 						while( $image = $stmImage->fetch(PDO::FETCH_ASSOC) ){
